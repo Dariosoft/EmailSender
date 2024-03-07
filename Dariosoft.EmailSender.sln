@@ -1,0 +1,107 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EndPoints", "EndPoints", "{9123F5A4-7C2B-4117-AD91-AF7FE4645B39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{53E7C739-E68B-4680-BB4E-A4E3296D12CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{517180CF-68B4-448A-B5F3-8F6A24DD49E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.EndPoint.Abstraction", "Project\EndPoints\Abstraction\Dariosoft.EmailSender.EndPoint.Abstraction.csproj", "{877262B2-5B65-40A8-B510-18EC023BA6A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Enums", "Project\Core\Enums\Dariosoft.EmailSender.Enums.csproj", "{ECCAA62C-B6DF-4C70-B927-BB5893FE50D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.EndPoint.gRPC", "Project\EndPoints\gRPC\Dariosoft.EmailSender.EndPoint.gRPC.csproj", "{DB1E43C7-44D3-46D4-9E29-206E728AFE62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.EndPoint.Api", "Project\EndPoints\Api\Dariosoft.EmailSender.EndPoint.Api.csproj", "{2C005A3E-548E-4A28-9DFA-232767FA32D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Infrastructure", "Project\Infrastructures\Infrastructure\Dariosoft.EmailSender.Infrastructure.csproj", "{19BC8DD8-7705-47D8-AA43-ABBA7EA489AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Infrastructure.Database", "Project\Infrastructures\Database\Dariosoft.EmailSender.Infrastructure.Database.csproj", "{8213B64D-ACE4-41D8-817D-73D69F57D51D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{16194CC0-CFD0-4A5C-BA9E-993EB244312E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Core.Repositories", "Project\Core\Repositories\Dariosoft.EmailSender.Core.Repositories.csproj", "{BCE312B8-4124-4CFC-BE03-6C4176EC0F2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Core.Models", "Project\Core\Models\Dariosoft.EmailSender.Core.Models.csproj", "{DDC8E739-6642-4C30-87CC-36FE3DF552FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Application", "Project\Application\Application\Dariosoft.EmailSender.Application.csproj", "{49EC85EF-2A5E-4F55-8315-F82247690972}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dariosoft", "Dariosoft", "{190A8488-6E1E-4B65-9D3E-E274923D0FC4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.Framework", "Dariosoft\Framework\Dariosoft.Framework.csproj", "{C2EA3A04-2EBC-446F-B47E-DA037EBF92BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{877262B2-5B65-40A8-B510-18EC023BA6A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877262B2-5B65-40A8-B510-18EC023BA6A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877262B2-5B65-40A8-B510-18EC023BA6A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877262B2-5B65-40A8-B510-18EC023BA6A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECCAA62C-B6DF-4C70-B927-BB5893FE50D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECCAA62C-B6DF-4C70-B927-BB5893FE50D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECCAA62C-B6DF-4C70-B927-BB5893FE50D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECCAA62C-B6DF-4C70-B927-BB5893FE50D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB1E43C7-44D3-46D4-9E29-206E728AFE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB1E43C7-44D3-46D4-9E29-206E728AFE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB1E43C7-44D3-46D4-9E29-206E728AFE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB1E43C7-44D3-46D4-9E29-206E728AFE62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C005A3E-548E-4A28-9DFA-232767FA32D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C005A3E-548E-4A28-9DFA-232767FA32D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C005A3E-548E-4A28-9DFA-232767FA32D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C005A3E-548E-4A28-9DFA-232767FA32D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19BC8DD8-7705-47D8-AA43-ABBA7EA489AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19BC8DD8-7705-47D8-AA43-ABBA7EA489AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19BC8DD8-7705-47D8-AA43-ABBA7EA489AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19BC8DD8-7705-47D8-AA43-ABBA7EA489AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8213B64D-ACE4-41D8-817D-73D69F57D51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8213B64D-ACE4-41D8-817D-73D69F57D51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8213B64D-ACE4-41D8-817D-73D69F57D51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8213B64D-ACE4-41D8-817D-73D69F57D51D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE312B8-4124-4CFC-BE03-6C4176EC0F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE312B8-4124-4CFC-BE03-6C4176EC0F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE312B8-4124-4CFC-BE03-6C4176EC0F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE312B8-4124-4CFC-BE03-6C4176EC0F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC8E739-6642-4C30-87CC-36FE3DF552FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC8E739-6642-4C30-87CC-36FE3DF552FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC8E739-6642-4C30-87CC-36FE3DF552FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC8E739-6642-4C30-87CC-36FE3DF552FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EC85EF-2A5E-4F55-8315-F82247690972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EC85EF-2A5E-4F55-8315-F82247690972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EC85EF-2A5E-4F55-8315-F82247690972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EC85EF-2A5E-4F55-8315-F82247690972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2EA3A04-2EBC-446F-B47E-DA037EBF92BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2EA3A04-2EBC-446F-B47E-DA037EBF92BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2EA3A04-2EBC-446F-B47E-DA037EBF92BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2EA3A04-2EBC-446F-B47E-DA037EBF92BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9123F5A4-7C2B-4117-AD91-AF7FE4645B39} = {9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}
+		{53E7C739-E68B-4680-BB4E-A4E3296D12CC} = {9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}
+		{517180CF-68B4-448A-B5F3-8F6A24DD49E4} = {9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}
+		{877262B2-5B65-40A8-B510-18EC023BA6A0} = {9123F5A4-7C2B-4117-AD91-AF7FE4645B39}
+		{ECCAA62C-B6DF-4C70-B927-BB5893FE50D3} = {53E7C739-E68B-4680-BB4E-A4E3296D12CC}
+		{DB1E43C7-44D3-46D4-9E29-206E728AFE62} = {9123F5A4-7C2B-4117-AD91-AF7FE4645B39}
+		{2C005A3E-548E-4A28-9DFA-232767FA32D5} = {9123F5A4-7C2B-4117-AD91-AF7FE4645B39}
+		{19BC8DD8-7705-47D8-AA43-ABBA7EA489AB} = {517180CF-68B4-448A-B5F3-8F6A24DD49E4}
+		{8213B64D-ACE4-41D8-817D-73D69F57D51D} = {517180CF-68B4-448A-B5F3-8F6A24DD49E4}
+		{16194CC0-CFD0-4A5C-BA9E-993EB244312E} = {9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}
+		{BCE312B8-4124-4CFC-BE03-6C4176EC0F2A} = {53E7C739-E68B-4680-BB4E-A4E3296D12CC}
+		{DDC8E739-6642-4C30-87CC-36FE3DF552FA} = {53E7C739-E68B-4680-BB4E-A4E3296D12CC}
+		{49EC85EF-2A5E-4F55-8315-F82247690972} = {16194CC0-CFD0-4A5C-BA9E-993EB244312E}
+		{C2EA3A04-2EBC-446F-B47E-DA037EBF92BA} = {190A8488-6E1E-4B65-9D3E-E274923D0FC4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {513B3CD9-6223-4CE9-82CA-C1E70639D016}
+	EndGlobalSection
+EndGlobal
