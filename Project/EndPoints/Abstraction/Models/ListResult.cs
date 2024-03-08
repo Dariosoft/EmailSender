@@ -30,6 +30,6 @@
             => new ListResult<T> { IsSuccessful = true, Data = data, TotalItems = totalItems, PageNumber = pageNumber, PageSize = pageSize };
 
         public new static ListResult<T> Fail(string message, string? code)
-            => new ListResult<T> { IsSuccessful = false, Data = [], Messages = [new Reason { Text = message, Code = code }] };
+            => new ListResult<T> { IsSuccessful = false, Data = [], Messages = [new ResultMessage { Text = message, Code = code }] };
     }
 }

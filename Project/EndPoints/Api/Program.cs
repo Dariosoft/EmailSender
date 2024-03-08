@@ -1,9 +1,16 @@
 using Microsoft.OpenApi.Models;
+using System.Threading.Tasks;
 
 namespace Dariosoft.EmailSender.EndPoint.Api
 {
+    public class Person
+    {
+
+    }
+
     public class Program
     {
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);

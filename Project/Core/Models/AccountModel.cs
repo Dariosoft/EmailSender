@@ -1,8 +1,8 @@
-﻿using System;
-
+﻿
 namespace Dariosoft.EmailSender.Core.Models
 {
-    public record Account
+
+    public record AccountModel
     {
         public required Guid Id { get; set; }
 

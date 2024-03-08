@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\Application\Dariosoft.EmailSender.Application.csproj" />
-    <ProjectReference Include="..\Abstraction\Dariosoft.EmailSender.EndPoint.Abstraction.csproj" />
+    <ProjectReference Include="..\EndPoint\Dariosoft.EmailSender.EndPoint.csproj" />
   </ItemGroup>
 
 </Project>

@@ -30,12 +30,12 @@
             => new ListReply<T> { IsSuccessful = true, Data = data, TotalItems = totalItems, PageNumber = pageNumber, PageSize = pageSize };
 
         public new static ListReply<T> Fail(string message, string? code = null)
-            => new ListReply<T> { IsSuccessful = false, Data = [], Reasons = [new Reason { Text = message, Code = code }] };
+            => new ListReply<T> { IsSuccessful = false, Data = [], Errors = [new Reason { Text = message, Code = code }] };
 
         public static ListReply<T> From(Reply other, IEnumerable<T> data)
-            => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = data, Reasons = other.Reasons };
+            => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = data, Errors = other.Errors };
 
         public static ListReply<T> From(Reply other)
-            => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = [], Reasons = other.Reasons };
+            => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = [], Errors = other.Errors };
     }
 }

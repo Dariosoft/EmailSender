@@ -6,6 +6,8 @@
 
         public required string Where { get; init; }
 
+        public required bool UserIsAnonymous { get; init; }
+
         public required string UserId { get; init; }
 
         public required string UserName { get; init; }
@@ -21,6 +23,7 @@
             {
                 When = this.When,
                 Where = this.Where,
+                UserIsAnonymous = this.UserIsAnonymous,
                 UserId = this.UserId,
                 UserName = this.UserName,
                 UserIP = this.UserIP,
