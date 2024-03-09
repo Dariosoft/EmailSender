@@ -1,8 +1,8 @@
 ﻿namespace Dariosoft.EmailSender.EndPoint.Abstraction.Contracts
 {
-    public interface IAccountEndPoint: IEndPoint
+    public interface IAccountEndPoint : IEndPoint
     {
-        Task<Models.Result<Models.Common.ModelCreationResult>> Create(Models.Account.CreateAccountModel model);
+        Task<Models.Result<Models.Common.BaseModel>> Create(Models.Account.CreateAccountModel model);
 
         Task<Models.Result> Delete(string key);
 

@@ -6,9 +6,10 @@ namespace Dariosoft.EmailSender.Application
 {
     public static class Startup
     {
-        public static IServiceCollection RegisterApplicationLayer(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration configuration)
         {
             return services
+                .AddSingleton<IHostService, Concrete.HostService>()
                 .RegisterInfrastructures(configuration);
         }
     }

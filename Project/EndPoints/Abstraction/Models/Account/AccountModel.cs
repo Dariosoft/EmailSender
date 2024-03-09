@@ -6,6 +6,8 @@
 
         public required int Serial { get; set; }
 
+        public required DateTimeOffset CreationTime { get; set; }
+
         public required string HostId { get; set; }
 
         public required bool Enabled { get; set; }

@@ -1,6 +1,9 @@
-﻿namespace Dariosoft.EmailSender.EndPoint.Api.Extensions
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Dariosoft.EmailSender.EndPoint
 {
-    internal static class HttpRequestExtensions
+
+    public static class HttpRequestExtensions
     {
         public static Framework.Request Transform(this HttpRequest request, Framework.ListQueryModel? listQuery = null)
         {
@@ -46,6 +49,11 @@
             => request.HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
 
         public static string GetCurrentUserAgent(this HttpRequest request)
-            => request.Headers.UserAgent.ToString();
+        {
+
+            var val = request.Headers["User-Agent"];
+
+            return val.ToString();
+        }
     }
 }

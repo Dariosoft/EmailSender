@@ -1,8 +1,8 @@
 ﻿namespace Dariosoft.EmailSender.EndPoint.Abstraction.Models.Common
 {
-    public record ModelCreationResult
+    public record BaseModel
     {
-        public required string Key { get; set; }
+        public required string Id { get; set; }
 
         public required int Serial { get; set; }
 

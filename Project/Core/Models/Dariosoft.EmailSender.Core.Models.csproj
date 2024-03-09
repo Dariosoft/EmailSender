@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Enums\Dariosoft.EmailSender.Enums.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Dariosoft.EmailSender.Enums" Version="1.0.3" />
+	</ItemGroup>
 
 </Project>

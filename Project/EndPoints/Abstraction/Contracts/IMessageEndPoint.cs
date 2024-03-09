@@ -2,7 +2,7 @@
 {
     public interface IMessageEndPoint : IEndPoint
     {
-        Task<Models.Result<Models.Common.ModelCreationResult>> Create(Models.Message.CreateMessageModel model);
+        Task<Models.Result<Models.Common.BaseModel>> Create(Models.Message.CreateMessageModel model);
 
         Task<Models.Result> TrySend(string key);
 

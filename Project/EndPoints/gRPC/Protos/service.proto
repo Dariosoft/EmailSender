@@ -1,0 +1,336 @@
+syntax = "proto3";
+package Dariosoft.EmailSender.EndPoint.Abstraction.GrpcInterface;
+
+//--------------- Imports ---------------
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/wrappers.proto";
+
+//--------------- Services ---------------
+service GrpcAccountEndPoint {
+rpc Create(GrpcAccountEndPoint_Create_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel_);
+rpc Delete(GrpcAccountEndPoint_Delete_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc Update(GrpcAccountEndPoint_Update_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc SetAvailability(GrpcAccountEndPoint_SetAvailability_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc List(GrpcAccountEndPoint_List_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel_);
+rpc Get(GrpcAccountEndPoint_Get_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel_);
+}
+
+service GrpcHostEndPoint {
+rpc Create(GrpcHostEndPoint_Create_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel_);
+rpc Delete(GrpcHostEndPoint_Delete_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc Update(GrpcHostEndPoint_Update_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc SetAvailability(GrpcHostEndPoint_SetAvailability_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc List(GrpcHostEndPoint_List_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel_);
+rpc Get(GrpcHostEndPoint_Get_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel_);
+}
+
+service GrpcMessageEndPoint {
+rpc Create(GrpcMessageEndPoint_Create_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel_);
+rpc TrySend(GrpcMessageEndPoint_TrySend_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc TryCancel(GrpcMessageEndPoint_TryCancel_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc Delete(GrpcMessageEndPoint_Delete_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc Update(GrpcMessageEndPoint_Update_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc List(GrpcMessageEndPoint_List_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Message_MessageModel_);
+rpc Get(GrpcMessageEndPoint_Get_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Message_MessageModel_);
+}
+
+//--------------- Enums ---------------
+enum GrpcMailPriority {
+MailPriority_Normal = 0;
+MailPriority_Low = 1;
+MailPriority_High = 2;
+}
+
+enum GrpcMessageStatus {
+MessageStatus_Unknown = 0;
+MessageStatus_Draft = 1;
+MessageStatus_Pending = 2;
+MessageStatus_Sending = 3;
+MessageStatus_Failed = 4;
+MessageStatus_Sent = 5;
+MessageStatus_Canceled = 6;
+}
+
+//--------------- Messages ---------------
+message GrpcAccountEndPoint_Create_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_CreateAccountModel Model = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel_ {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel Data = 1;
+bool IsSuccessful = 2;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 3;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 4;
+}
+
+message GrpcAccountEndPoint_Delete_RequestMessage {
+string Key = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result {
+bool IsSuccessful = 1;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 2;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 3;
+}
+
+message GrpcAccountEndPoint_Update_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_UpdateAccountModel Model = 1;
+}
+
+message GrpcAccountEndPoint_SetAvailability_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_SetAvailabilityModel Model = 1;
+}
+
+message GrpcAccountEndPoint_List_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_ListQueryModel Model = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel_ {
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel Data = 1;
+int32 PageNumber = 2;
+int32 PageSize = 3;
+int32 TotalItems = 4;
+bool IsSuccessful = 5;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 6;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 7;
+}
+
+message GrpcAccountEndPoint_Get_RequestMessage {
+string Key = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel_ {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel Data = 1;
+bool IsSuccessful = 2;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 3;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 4;
+}
+
+message GrpcHostEndPoint_Create_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_CreateHostModel Model = 1;
+}
+
+message GrpcHostEndPoint_Delete_RequestMessage {
+string Key = 1;
+}
+
+message GrpcHostEndPoint_Update_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_UpdateHostModel Model = 1;
+}
+
+message GrpcHostEndPoint_SetAvailability_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_SetAvailabilityModel Model = 1;
+}
+
+message GrpcHostEndPoint_List_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_ListQueryModel Model = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel_ {
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel Data = 1;
+int32 PageNumber = 2;
+int32 PageSize = 3;
+int32 TotalItems = 4;
+bool IsSuccessful = 5;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 6;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 7;
+}
+
+message GrpcHostEndPoint_Get_RequestMessage {
+string Key = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel_ {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel Data = 1;
+bool IsSuccessful = 2;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 3;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 4;
+}
+
+message GrpcMessageEndPoint_Create_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Message_CreateMessageModel Model = 1;
+}
+
+message GrpcMessageEndPoint_TrySend_RequestMessage {
+string Key = 1;
+}
+
+message GrpcMessageEndPoint_TryCancel_RequestMessage {
+string Key = 1;
+}
+
+message GrpcMessageEndPoint_Delete_RequestMessage {
+string Key = 1;
+}
+
+message GrpcMessageEndPoint_Update_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Message_UpdateMessageModel Model = 1;
+}
+
+message GrpcMessageEndPoint_List_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_ListQueryModel Model = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Message_MessageModel_ {
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Message_MessageModel Data = 1;
+int32 PageNumber = 2;
+int32 PageSize = 3;
+int32 TotalItems = 4;
+bool IsSuccessful = 5;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 6;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 7;
+}
+
+message GrpcMessageEndPoint_Get_RequestMessage {
+string Key = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Message_MessageModel_ {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Message_MessageModel Data = 1;
+bool IsSuccessful = 2;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 3;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 4;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_CreateAccountModel {
+string HostKey = 1;
+bool Enabled = 2;
+string Username = 3;
+string Password = 4;
+string DisplayName = 5;
+string Description = 6;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel {
+string Id = 1;
+int32 Serial = 2;
+google.protobuf.Timestamp CreationTime = 3;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason {
+string Text = 1;
+string Code = 2;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_UpdateAccountModel {
+string AccountKey = 1;
+string HostKey = 2;
+bool Enabled = 3;
+string Username = 4;
+string Password = 5;
+string DisplayName = 6;
+string Description = 7;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_SetAvailabilityModel {
+string Key = 1;
+bool Enabled = 2;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_ListQueryModel {
+string Query = 1;
+int32 Page = 2;
+int32 PageSize = 3;
+string SortBy = 4;
+bool DescendingSort = 5;
+map<string,string> Parameters = 6;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel {
+string Id = 1;
+int32 Serial = 2;
+google.protobuf.Timestamp CreationTime = 3;
+string HostId = 4;
+bool Enabled = 5;
+string Username = 6;
+string Password = 7;
+string DisplayName = 8;
+string Description = 9;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_CreateHostModel {
+string Address = 1;
+int32 PortNumber = 2;
+bool Enabled = 3;
+bool UseSsl = 4;
+string Description = 5;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_UpdateHostModel {
+string Key = 1;
+string Address = 2;
+int32 PortNumber = 3;
+bool UseSsl = 4;
+bool Enabled = 5;
+string Description = 6;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel {
+string Id = 1;
+int32 Serial = 2;
+google.protobuf.Timestamp CreationTime = 3;
+string Address = 4;
+int32 PortNumber = 5;
+bool UseSsl = 6;
+bool Enabled = 7;
+string Description = 8;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Message_CreateMessageModel {
+string SenderAccountKey = 1;
+bool IsDraft = 2;
+string Subject = 3;
+bool SubjectIsHtml = 4;
+string Body = 5;
+bool BodyIsHtml = 6;
+GrpcMailPriority Priority = 7;
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress From = 8;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress To = 9;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress Cc = 10;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress Bcc = 11;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress ReplyTo = 12;
+map<string,string> Headers = 13;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Message_UpdateMessageModel {
+string MessageKey = 1;
+string SenderAccountKey = 2;
+string Subject = 3;
+bool SubjectIsHtml = 4;
+string Body = 5;
+bool BodyIsHtml = 6;
+GrpcMailPriority Priority = 7;
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress From = 8;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress To = 9;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress Cc = 10;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress Bcc = 11;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress ReplyTo = 12;
+map<string,string> Headers = 13;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Message_MessageModel {
+string Id = 1;
+int32 Serial = 2;
+google.protobuf.Timestamp CreationTime = 3;
+string Subject = 4;
+bool SubjectIsHtml = 5;
+string Body = 6;
+bool BodyIsHtml = 7;
+GrpcMailPriority Priority = 8;
+GrpcMessageStatus Status = 9;
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress From = 10;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress To = 11;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress Cc = 12;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress Bcc = 13;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress ReplyTo = 14;
+map<string,string> Headers = 15;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_MailAddress {
+string Address = 1;
+string DisplayName = 2;
+}
+

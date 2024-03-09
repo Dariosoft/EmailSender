@@ -6,6 +6,8 @@
 
         public required int Serial { get; set; }
 
+        public required DateTimeOffset CreationTime { get; set; }
+
         public required string Address { get; set; }
 
         public required int PortNumber { get; set; }

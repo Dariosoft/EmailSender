@@ -3,11 +3,8 @@ using System.Net.Mail;
 
 namespace Dariosoft.EmailSender.Core.Models
 {
-    public record MessageModel
+    public record MessageModel : BaseModel
     {
-        public required Guid Id { get; set; }
-
-        public required int Serial { get; set; }
 
         public required string Subject { get; set; }
 

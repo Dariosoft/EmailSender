@@ -2,12 +2,8 @@
 namespace Dariosoft.EmailSender.Core.Models
 {
 
-    public record AccountModel
+    public record AccountModel : BaseModel
     {
-        public required Guid Id { get; set; }
-
-        public required int Serial { get; set; }
-
         public required string HostId { get; set; }
 
         public required bool Enabled { get; set; }

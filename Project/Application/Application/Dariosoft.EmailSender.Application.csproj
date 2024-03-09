@@ -12,10 +12,6 @@
     <ProjectReference Include="..\..\Infrastructures\Infrastructure\Dariosoft.EmailSender.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Concrete\" />
-  </ItemGroup>
-
 
 
 </Project>

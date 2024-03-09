@@ -3,11 +3,6 @@ using System.Threading.Tasks;
 
 namespace Dariosoft.EmailSender.EndPoint.Api
 {
-    public class Person
-    {
-
-    }
-
     public class Program
     {
 
@@ -17,7 +12,12 @@ namespace Dariosoft.EmailSender.EndPoint.Api
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services
+                .AddEndPointLayer(builder.Configuration)
+                .AddHttpContextAccessor()
+                .AddControllers()
+                ;
+
 
             if (builder.Environment.IsDevelopment())
             {

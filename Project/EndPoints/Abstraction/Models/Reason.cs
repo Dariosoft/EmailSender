@@ -1,6 +1,6 @@
 ﻿namespace Dariosoft.EmailSender.EndPoint.Abstraction.Models
 {
-    public record ResultMessage
+    public record Reason
     {
         public required string Text { get; set; }
 

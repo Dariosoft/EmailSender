@@ -1,6 +1,6 @@
 ﻿namespace Dariosoft.EmailSender.Enums
 {
-    public enum MessageStatus: byte
+    public enum MessageStatus : byte
     {
         Unknown = 0,
         Draft = 1,

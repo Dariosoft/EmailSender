@@ -8,6 +8,8 @@ namespace Dariosoft.EmailSender.EndPoint.Abstraction.Models.Message
 
         public required int Serial { get; set; }
 
+        public required DateTimeOffset CreationTime { get; set; }
+
         public required string Subject { get; set; }
 
         public required bool SubjectIsHtml { get; set; }

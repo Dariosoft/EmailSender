@@ -1,11 +1,8 @@
 ﻿namespace Dariosoft.EmailSender.Core.Models
 {
-    public record HostModel
+
+    public record HostModel : BaseModel
     {
-        public required Guid Id { get; set; }
-
-        public required int Serial { get; set; }
-
         public required string Address { get; set; }
 
         public required int PortNumber { get; set; }
