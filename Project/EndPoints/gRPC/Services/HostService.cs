@@ -64,7 +64,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC.Services
 
             return reply;
         }
-
+        
         public override Task<GrpcResult> SetAvailability(GrpcHostEndPoint_SetAvailability_RequestMessage request, ServerCallContext context)
         {
             var model = ModelMapper.Instance.FromGrpc(request.Model);

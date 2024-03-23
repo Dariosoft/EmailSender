@@ -26,7 +26,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 Query = input.Query,
                 SortBy = input.SortBy,
                 DescendingSort = input.DescendingSort,
-                Parameters = input.Parameters.ToDictionary(e => e.Key, e => e.Value)
+                Parameters = input.Parameters.ToDictionary(e => e.Key, e => e.Value),
             };
 
         //---------- Client ↓ -----------------------
@@ -35,6 +35,8 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
             {
                 Name = input.Name,
                 Enabled = input.Enabled,
+                AdminUserName = input.AdminUserName,
+                AdminPassword = input.AdminPassword,
                 Description = input.Description,
             };
 
@@ -44,6 +46,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 Key = input.Key,
                 Enabled = input.Enabled,
                 Name = input.Name,
+                AdminUserName = input.AdminUserName,
                 Description = input.Description,
             };
 
@@ -57,6 +60,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 PortNumber = input.PortNumber,
                 UseSsl = input.UseSsl,
                 Description = input.Description,
+                ClientKey = input.ClientKey,
             };
 
         public Abstraction.Models.Host.UpdateHostModel FromGrpc(GrpcModel_UpdateHost input)
@@ -68,6 +72,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 PortNumber = input.PortNumber,
                 UseSsl = input.UseSsl,
                 Description = input.Description,
+                ClientKey = input.ClientKey,
             };
 
 
@@ -75,10 +80,11 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
         public Abstraction.Models.Account.CreateAccountModel FromGrpc(GrpcModel_CreateAccount input)
             => new Abstraction.Models.Account.CreateAccountModel
             {
+                ClientKey = input.ClientKey,
                 HostKey = input.HostKey,
                 Enabled = input.Enabled,
                 DisplayName = input.DisplayName,
-                EmailAddress = input.Username,
+                EmailAddress = input.EmailAddress,
                 Password = input.Password,
                 Description = input.Description,
             };
@@ -86,11 +92,12 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
         public Abstraction.Models.Account.UpdateAccountModel FromGrpc(GrpcModel_UpdateAccount input)
             => new Abstraction.Models.Account.UpdateAccountModel
             {
-                AccountKey = input.AccountKey,
+                Key = input.Key,
+                ClientKey = input.ClientKey,
                 HostKey = input.HostKey,
                 Enabled = input.Enabled,
                 DisplayName = input.DisplayName,
-                EmailAddress = input.Username,
+                EmailAddress = input.EmailAddress,
                 Password = input.Password,
                 Description = input.Description,
             };
@@ -104,7 +111,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
         public Abstraction.Models.Message.CreateMessageModel FromGrpc(GrpcModel_CreateMessage input)
             => new Abstraction.Models.Message.CreateMessageModel
             {
-                SourceAccountKey = input.SenderAccountKey,
+                SourceAccountKey = input.SourceAccountKey,
                 IsDraft = input.IsDraft,
                 Subject = input.Subject,
                 SubjectIsHtml = input.SubjectIsHtml,
@@ -122,8 +129,8 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
         public Abstraction.Models.Message.UpdateMessageModel FromGrpc(GrpcModel_UpdateMessage input)
             => new Abstraction.Models.Message.UpdateMessageModel
             {
-                Key = input.MessageKey,
-                SourceAccountKey = input.SenderAccountKey,
+                Key = input.Key,
+                SourceAccountKey = input.SourceAccountKey,
                 Subject = input.Subject,
                 SubjectIsHtml = input.SubjectIsHtml,
                 Body = input.Body,
@@ -180,6 +187,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 Description = input.Description,
                 AccessKey = input.AccessKey,
                 Enabled = input.Enabled,
+                AdminUserName = input.AdminUserName,
             };
 
         public GrpcResult_ClientModel ToGrpc(Abstraction.Models.Result<Abstraction.Models.Client.ClientModel> input)
@@ -200,7 +208,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 PageNumber = input.PageNumber,
                 PageSize = input.PageSize,
                 TotalItems = input.TotalItems,
-                Data = { input.IsSuccessful ? input.Data.Select(ToGrpc) : [] }
+                Data = { input.IsSuccessful ? input.Data.Select(ToGrpc) : [] },
             };
 
         public GrpcModel_Host ToGrpc(Abstraction.Models.Host.HostModel input)
@@ -214,6 +222,8 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 PortNumber = input.PortNumber,
                 UseSsl = input.UseSsl,
                 Enabled = input.Enabled,
+                ClientId = new Abstraction.GrpcInterface.GrpcValueMessage_Guid { Value = (input.ClientId ?? Guid.Empty).ToString().ToLower() },
+                ClientName = input.ClientName,
             };
 
         public GrpcResult_HostModel ToGrpc(Abstraction.Models.Result<Abstraction.Models.Host.HostModel> input)
@@ -242,10 +252,13 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
             {
                 Id = input.Id,
                 Serial = input.Serial,
+                ClientId = input.ClientId,
+                ClientName = input.ClientName,
+                Host = input.Host,
                 HostId = input.HostId,
                 CreationTime = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(input.CreationTime),
                 DisplayName = input.DisplayName,
-                Username = input.EmailAddress,
+                EmailAddress = input.EmailAddress,
                 Password = input.Password,
                 Description = input.Description,
                 Enabled = input.Enabled,
@@ -293,6 +306,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 ReplyTo = { (input.ReplyTo ?? []).Select(ToGrpc) },
                 From = input.From is null ? null : ToGrpc(input.From),
                 Headers = { input.Headers },
+                NumberOfTries = new Abstraction.GrpcInterface.GrpcValueMessage_Short { Value = input.NumberOfTries.ToString() },
             };
 
         public GrpcResult_MessageModel ToGrpc(Abstraction.Models.Result<Abstraction.Models.Message.MessageModel> input)

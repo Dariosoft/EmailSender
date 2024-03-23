@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Version>1.0.0</Version>
+		<Product>Dariosoft EmailSender gRPC SDK</Product>
+		<Company>Dariosoft</Company>
+		<Authors>Dariosoft, Pouya Faridi</Authors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Dariosoft.EmailSender.EndPoint.Abstraction" Version="1.0.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.26.0" PrivateAssets="Compile" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.61.0" PrivateAssets="Compile" />
+		<PackageReference Include="Grpc.Tools" Version="2.62.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="Protos\service.proto" GrpcServices="Client" />
+	</ItemGroup>
+
+</Project>
