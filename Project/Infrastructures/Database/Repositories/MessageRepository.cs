@@ -368,16 +368,29 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                                 await context.Messages
                                     .Where(x => x.Id == messageId)
                                     .Set(x => x.Status, request.Payload.Status)
-                                    .Set(x => x.LastStatusTime, request.When)
+                                    .Set(x => x.LastStatusTime, request.When.UtcDateTime)
                                     .UpdateAsync();
 
+
+
                                 if (request.Payload.AddLog)
-                                    await context.InsertAsync(new DataSource.Tables.MessageTrySendLog
+                                {
+                                    await context.MessageSendLogs.InsertAsync(() => new DataSource.Tables.MessageTrySendLog
                                     {
+                                        Id = Guid.NewGuid(),
                                         MessageId = messageId,
                                         When = request.When.UtcDateTime,
-                                        Status = request.Payload.Status
+                                        Status = request.Payload.Status,
+                                        Description = string.IsNullOrWhiteSpace(request.Payload.Description) ? null : request.Payload.Description.Trim()
                                     });
+
+                                    //await context.InsertAsync(new DataSource.Tables.MessageTrySendLog
+                                    //{
+                                    //    MessageId = messageId,
+                                    //    When = request.When.UtcDateTime,
+                                    //    Status = request.Payload.Status
+                                    //}, schemaName: DataSource.DbSchema.Core);
+                                }
 
                                 await transaction.CommitAsync();
                             }
@@ -398,7 +411,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply<Core.Models.MessageModel?>> GetItemToSend(Request<MailPriority> request)
+        public async Task<Reply<Core.Models.MessageModel?>> GetItemToSend(Request<Core.Models.MessageGetHeadItem> request)
         {
             try
             {
@@ -412,8 +425,9 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                         try
                         {
                             entity = await context.Messages
-                                .Where(e => e.Priority == request.Payload && (e.Flags & DataSource.RecordFlag.Deleted) == 0)
+                                .Where(e => e.Priority == request.Payload.Priority && (e.Flags & DataSource.RecordFlag.Deleted) == 0)
                                 .Where(e => e.Status == Enums.MessageStatus.Pending || e.Status == Enums.MessageStatus.Failed)
+                                .Where(e => e.NumberOfTries < request.Payload.MaxTry)
                                 .OrderBy(e => e.Status)
                                 .ThenBy(e => e.NumberOfTries)
                                 .FirstOrDefaultAsync();

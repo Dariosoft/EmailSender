@@ -23,6 +23,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.DataSource
         public ITable<Tables.Host> Hosts => this.GetTable<Tables.Host>().SchemaName(DbSchema.Core);
         public ITable<Tables.Account> Accounts => this.GetTable<Tables.Account>().SchemaName(DbSchema.Core);
         public ITable<Tables.Message> Messages => this.GetTable<Tables.Message>().SchemaName(DbSchema.Core);
+        public ITable<Tables.MessageTrySendLog> MessageSendLogs => this.GetTable<Tables.MessageTrySendLog>().SchemaName(DbSchema.Core);
         public ITable<Tables.MailAddressCollection> MailAddressCollections => this.GetTable<Tables.MailAddressCollection>().SchemaName(DbSchema.Core);
         public ITable<Tables.MailAddressCollectionItem> MailAddressCollectionItems => this.GetTable<Tables.MailAddressCollectionItem>().SchemaName(DbSchema.Core);
 

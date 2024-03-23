@@ -192,7 +192,8 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Migrations
             CreateTable(DataSource.DbSchema.Core, tblMessageTrySendLog)
                 .WithColumn(nameof(DataSource.Tables.MessageTrySendLog.MessageId)).AsGuid()
                 .WithColumn(nameof(DataSource.Tables.MessageTrySendLog.When)).AsDateTime()
-                .WithColumn(nameof(DataSource.Tables.MessageTrySendLog.Status)).AsInt16();
+                .WithColumn(nameof(DataSource.Tables.MessageTrySendLog.Status)).AsInt16()
+                .WithColumn(nameof(DataSource.Tables.MessageTrySendLog.Description)).AsString();
 
             Create.ForeignKey("FK_core_MessageTrySendLog_Message")
                 .FromTable(tblMessageTrySendLog)

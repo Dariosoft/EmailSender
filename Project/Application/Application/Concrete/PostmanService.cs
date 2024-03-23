@@ -39,7 +39,7 @@ namespace Dariosoft.EmailSender.Application.Concrete
 
             return exception is null
                 ? Reply<bool>.Success(true)
-                : Fail<bool>(request, nameof(SendMail), exception);
+                : Reply<bool>.Fail(exception.Message, code: exception.GetType().FullName ?? exception.GetType().Name);  //Fail<bool>(request, nameof(SendMail), exception);
         }
 
         public Reply ClearCache(Request request)

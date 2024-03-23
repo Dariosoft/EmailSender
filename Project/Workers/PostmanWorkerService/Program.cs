@@ -1,3 +1,5 @@
+using Dariosoft.EmailSender.Application;
+
 namespace Dariosoft.EmailSender.PostmanWorkerService
 {
     public class Program
@@ -5,7 +7,9 @@ namespace Dariosoft.EmailSender.PostmanWorkerService
         public static void Main(string[] args)
         {
             var builder = Host.CreateApplicationBuilder(args);
-            builder.Services.AddHostedService<Worker>();
+            builder.Services
+                .AddApplicationLayer(builder.Configuration)
+                .AddHostedService<Worker>();
 
             var host = builder.Build();
             host.Run();

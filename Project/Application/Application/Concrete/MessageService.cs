@@ -165,13 +165,32 @@ namespace Dariosoft.EmailSender.Application.Concrete
 
         public async Task<Reply<bool>> TrySend(Request<MailPriority> request)
         {
-            var getResult = await repository.GetItemToSend(request);
+            var getResult = await repository.GetItemToSend(request.Transform(new Core.Models.MessageGetHeadItem
+            {
+                Priority = request.Payload,
+                MaxTry = GetMaxNumberOfTriesToSend(request.Payload)
+            })); ;
 
             if (!getResult.IsSuccessful) return Reply<bool>.From(getResult);
 
             return await TrySend(request.Transform(getResult.Data));
         }
 
+        public Task<Reply> TryCancel(Request<Core.Models.KeyModel> request)
+        {
+            throw new NotImplementedException();
+        }
+
+        private ushort GetMaxNumberOfTriesToSend(MailPriority priority)
+        {
+            return priority switch
+            {
+                MailPriority.High => 50,
+                MailPriority.Low => 20,
+                _ => 10
+            };
+        }
+        
         private async Task<Reply<bool>> TrySend(Request<Core.Models.MessageModel?> request)
         {
             if (request.Payload is null) return Reply<bool>.SuccessWithWarning(false, I18n.Messages.Warning_RecordNotFound);
@@ -185,15 +204,11 @@ namespace Dariosoft.EmailSender.Application.Concrete
                 Id = request.Payload.Id,
                 Serial = request.Payload.Serial,
                 Status = result.IsSuccessful ? Enums.MessageStatus.Sent : Enums.MessageStatus.Failed,
+                Description = string.Join("\r\n", result.Errors.Select(e => e.ToString())),
                 AddLog = true,
             }));
 
             return result;
-        }
-
-        public Task<Reply> TryCancel(Request<Core.Models.KeyModel> request)
-        {
-            throw new NotImplementedException();
         }
     }
 }

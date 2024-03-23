@@ -8,5 +8,7 @@
 
         public required Enums.MessageStatus Status { get; set; }
 
+        public string? Description { get; set; }
+
     }
 }

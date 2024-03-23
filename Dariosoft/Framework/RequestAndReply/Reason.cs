@@ -6,6 +6,7 @@
 
         public string? Code { get; set; }
 
-        public override string ToString() => Text;
+        public override string ToString()
+            => string.IsNullOrWhiteSpace(Code) ? Text : $"{Code}:{Text}";
     }
 }

@@ -105,5 +105,14 @@ namespace Dariosoft.EmailSender.Core.Models
         public required Enums.MessageStatus Status { get; set; }
 
         public bool AddLog { get; set; } = true;
+
+        public string? Description { get; set; }
+    }
+
+    public record MessageGetHeadItem
+    {
+        public required MailPriority Priority { get; set; }
+
+        public required ushort MaxTry { get; set; }
     }
 }

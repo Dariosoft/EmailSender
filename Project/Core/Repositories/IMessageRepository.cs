@@ -1,6 +1,4 @@
-﻿using System.Net.Mail;
-
-namespace Dariosoft.EmailSender.Core.Repositories
+﻿namespace Dariosoft.EmailSender.Core.Repositories
 {
     public interface IMessageRepository : IRepository
     {
@@ -16,6 +14,6 @@ namespace Dariosoft.EmailSender.Core.Repositories
 
         Task<Reply<bool>> SetStatus(Request<Core.Models.MessageStatusModel> request);
 
-        Task<Reply<Core.Models.MessageModel?>> GetItemToSend(Request<MailPriority> request);
+        Task<Reply<Core.Models.MessageModel?>> GetItemToSend(Request<Core.Models.MessageGetHeadItem> request);
     }
 }
