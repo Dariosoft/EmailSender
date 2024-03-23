@@ -8,11 +8,16 @@
 
         public required DateTimeOffset CreationTime { get; set; }
 
+        public required string ClientId { get; set; }
+        public string ClientName { get; set; } = "";
+
         public required string HostId { get; set; }
+
+        public string Host { get; set; } = "";
 
         public required bool Enabled { get; set; }
 
-        public required string Username { get; set; }
+        public required string EmailAddress { get; set; }
 
         public required string Password { get; set; }
 
@@ -20,6 +25,6 @@
 
         public string? Description { get; set; }
 
-        public override string ToString() => Username;
+        public override string ToString() => EmailAddress;
     }
 }

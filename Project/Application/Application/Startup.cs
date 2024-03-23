@@ -9,7 +9,8 @@ namespace Dariosoft.EmailSender.Application
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration configuration)
         {
             return services
-                .AddSingleton<IHostService, Concrete.HostService>()
+                .AddSingleton<Concrete.ServiceInjection>()
+                .RegisterOf<IService, Concrete.Service>(ServiceLifetime.Singleton)
                 .RegisterInfrastructures(configuration);
         }
     }

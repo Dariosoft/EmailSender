@@ -18,6 +18,15 @@ rpc List(GrpcAccountEndPoint_List_RequestMessage) returns(GrpcDariosoft_EmailSen
 rpc Get(GrpcAccountEndPoint_Get_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel_);
 }
 
+service GrpcClientEndPoint {
+rpc Create(GrpcClientEndPoint_Create_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel_);
+rpc Delete(GrpcClientEndPoint_Delete_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc Update(GrpcClientEndPoint_Update_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc SetAvailability(GrpcClientEndPoint_SetAvailability_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
+rpc List(GrpcClientEndPoint_List_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel_);
+rpc Get(GrpcClientEndPoint_Get_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel_);
+}
+
 service GrpcHostEndPoint {
 rpc Create(GrpcHostEndPoint_Create_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Common_BaseModel_);
 rpc Delete(GrpcHostEndPoint_Delete_RequestMessage) returns(GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result);
@@ -104,6 +113,47 @@ string Key = 1;
 
 message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel_ {
 GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Account_AccountModel Data = 1;
+bool IsSuccessful = 2;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 3;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 4;
+}
+
+message GrpcClientEndPoint_Create_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Client_CreateClientModel Model = 1;
+}
+
+message GrpcClientEndPoint_Delete_RequestMessage {
+string Key = 1;
+}
+
+message GrpcClientEndPoint_Update_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Client_UpdateClientModel Model = 1;
+}
+
+message GrpcClientEndPoint_SetAvailability_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_SetAvailabilityModel Model = 1;
+}
+
+message GrpcClientEndPoint_List_RequestMessage {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Common_ListQueryModel Model = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel_ {
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel Data = 1;
+int32 PageNumber = 2;
+int32 PageSize = 3;
+int32 TotalItems = 4;
+bool IsSuccessful = 5;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 6;
+repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 7;
+}
+
+message GrpcClientEndPoint_Get_RequestMessage {
+string Key = 1;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel_ {
+GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel Data = 1;
 bool IsSuccessful = 2;
 repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Errors = 3;
 repeated GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Reason Warnings = 4;
@@ -249,6 +299,29 @@ string Username = 6;
 string Password = 7;
 string DisplayName = 8;
 string Description = 9;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Client_CreateClientModel {
+bool Enabled = 1;
+string Name = 2;
+string Description = 3;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Client_UpdateClientModel {
+string Key = 1;
+bool Enabled = 2;
+string Name = 3;
+string Description = 4;
+}
+
+message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel {
+string Id = 1;
+int32 Serial = 2;
+google.protobuf.Timestamp CreationTime = 3;
+bool Enabled = 4;
+string Name = 5;
+string AccessKey = 6;
+string Description = 7;
 }
 
 message GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Host_CreateHostModel {

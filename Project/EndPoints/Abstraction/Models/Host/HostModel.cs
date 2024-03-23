@@ -8,6 +8,10 @@
 
         public required DateTimeOffset CreationTime { get; set; }
 
+        public Guid? ClientId { get; set; }
+
+        public string? ClientName { get; set; }
+
         public required string Address { get; set; }
 
         public required int PortNumber { get; set; }

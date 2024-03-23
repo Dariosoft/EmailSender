@@ -1,6 +1,6 @@
 ﻿namespace Dariosoft.EmailSender.Core.Models
 {
-    public abstract record BaseModel
+    public record BaseModel
     {
         public required Guid Id { get; set; }
 

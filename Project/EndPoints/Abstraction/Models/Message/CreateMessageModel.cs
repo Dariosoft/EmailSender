@@ -4,7 +4,7 @@ namespace Dariosoft.EmailSender.EndPoint.Abstraction.Models.Message
 {
     public record CreateMessageModel
     {
-        public required string SenderAccountKey { get; set; }
+        public required string SourceAccountKey { get; set; }
 
         public bool IsDraft { get; set; }
 

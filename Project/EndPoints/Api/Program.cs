@@ -64,8 +64,9 @@ namespace Dariosoft.EmailSender.EndPoint.Api
 
             app.UseAuthorization();
 
-
             app.MapControllers();
+
+            app.Lifetime.RegisterLifetimeDelegates(app.Services);
 
             app.Run();
         }

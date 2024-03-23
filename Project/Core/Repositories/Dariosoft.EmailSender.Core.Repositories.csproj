@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Dariosoft\Framework\Dariosoft.Framework.csproj" />
+    <ProjectReference Include="..\I18n\Dariosoft.EmailSender.I18n.csproj" />
     <ProjectReference Include="..\Models\Dariosoft.EmailSender.Core.Models.csproj" />
   </ItemGroup>
 

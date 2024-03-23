@@ -24,6 +24,10 @@
             init => totalItems = value < 0 ? 0 : totalItems;
         }
 
+        public Reply Trim()
+        => new Reply { IsSuccessful = this.IsSuccessful, Errors = this.Errors, Warnings = this.Warnings };
+
+
         public static ListReply<T> Success(IEnumerable<T> data) => Success(data, data.Count());
 
         public static ListReply<T> Success(IEnumerable<T> data, int totalItems, int pageNumber = 1, int pageSize = 15)
@@ -32,10 +36,10 @@
         public new static ListReply<T> Fail(string message, string? code = null)
             => new ListReply<T> { IsSuccessful = false, Data = [], Errors = [new Reason { Text = message, Code = code }] };
 
-        public static ListReply<T> From(Reply other, IEnumerable<T> data)
-            => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = data, Errors = other.Errors };
+        public static ListReply<T> From(Reply other, Func<IEnumerable<T>>? getData = null)
+            => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = other.IsSuccessful && getData is not null ? getData() : [], Errors = other.Errors };
 
-        public static ListReply<T> From(Reply other)
-            => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = [], Errors = other.Errors };
+        //public static ListReply<T> From(Reply other)
+        //    => new ListReply<T> { IsSuccessful = other.IsSuccessful, Data = [], Errors = other.Errors };
     }
 }

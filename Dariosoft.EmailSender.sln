@@ -33,14 +33,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.Framework", "Dari
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{733D414C-BFF2-4638-A83E-56DC3183AF6D}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.EndPoint", "Project\EndPoints\EndPoint\Dariosoft.EmailSender.EndPoint.csproj", "{0C73EA02-2733-4D78-9675-2BEEA4C53D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.EmailSender.EndPoint", "Project\EndPoints\EndPoint\Dariosoft.EmailSender.EndPoint.csproj", "{0C73EA02-2733-4D78-9675-2BEEA4C53D33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Enums", "Project\Core\Enums\Dariosoft.EmailSender.Enums.csproj", "{9EF7476E-E6A2-4854-97B9-95F90977682A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.EmailSender.Enums", "Project\Core\Enums\Dariosoft.EmailSender.Enums.csproj", "{9EF7476E-E6A2-4854-97B9-95F90977682A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.I18n", "Project\Core\I18n\Dariosoft.EmailSender.I18n.csproj", "{C54421E2-BEEF-45A0-ABAD-37E4C56E9207}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.Framework.Cryptography", "Dariosoft\Cryptography\Dariosoft.Framework.Cryptography.csproj", "{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{0609D4A9-B858-46F6-8154-CEB2389E8974}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +93,14 @@ Global
 		{9EF7476E-E6A2-4854-97B9-95F90977682A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EF7476E-E6A2-4854-97B9-95F90977682A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EF7476E-E6A2-4854-97B9-95F90977682A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C54421E2-BEEF-45A0-ABAD-37E4C56E9207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C54421E2-BEEF-45A0-ABAD-37E4C56E9207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C54421E2-BEEF-45A0-ABAD-37E4C56E9207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C54421E2-BEEF-45A0-ABAD-37E4C56E9207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +121,9 @@ Global
 		{C2EA3A04-2EBC-446F-B47E-DA037EBF92BA} = {190A8488-6E1E-4B65-9D3E-E274923D0FC4}
 		{0C73EA02-2733-4D78-9675-2BEEA4C53D33} = {9123F5A4-7C2B-4117-AD91-AF7FE4645B39}
 		{9EF7476E-E6A2-4854-97B9-95F90977682A} = {53E7C739-E68B-4680-BB4E-A4E3296D12CC}
+		{C54421E2-BEEF-45A0-ABAD-37E4C56E9207} = {53E7C739-E68B-4680-BB4E-A4E3296D12CC}
+		{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B} = {190A8488-6E1E-4B65-9D3E-E274923D0FC4}
+		{0609D4A9-B858-46F6-8154-CEB2389E8974} = {9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {513B3CD9-6223-4CE9-82CA-C1E70639D016}

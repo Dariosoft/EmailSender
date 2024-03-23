@@ -4,6 +4,8 @@
     {
         public required string Key { get; set; }
 
+        public string? ClientKey { get; set; }
+
         public required string Address { get; set; }
 
         public required int PortNumber { get; set; }

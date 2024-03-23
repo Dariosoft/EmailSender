@@ -8,13 +8,11 @@ namespace Dariosoft.EmailSender.EndPoint.EndPoints
     class HostEndPoint(IHttpContextAccessor contextAccessor, Application.IHostService service)
         : EndPoint(contextAccessor.HttpContext), Abstraction.Contracts.IHostEndPoint
     {
-        public Task<Abstraction.Models.Result<Abstraction.Models.Common.BaseModel>> Create(Abstraction.Models.Host.CreateHostModel model)
+        public Task<Abstraction.Models.Result<BaseModel>> Create(Abstraction.Models.Host.CreateHostModel model)
         {
-            var req = Request.Transform(model.Patch());
-
-            var reply = service.Create(req).Done(
-                    onSuccess: res => res.Transform(() => req.Payload.ToModelCreationResult()),
-                    onFailed: exp => Result<BaseModel>.Fail("Unexpected error.")
+            var reply = service.Create(Request.Transform(model.Patch())).Done(
+                    onSuccess: res => res.Transform(() => res.Data!.Unpatch()),
+                    onFailed: exp => Result<BaseModel>.Fail(I18n.Messages.Error_UnexpectedError)
                 );
 
             return reply;
@@ -22,28 +20,49 @@ namespace Dariosoft.EmailSender.EndPoint.EndPoints
 
         public Task<Abstraction.Models.Result> Delete(string key)
         {
-            throw new NotImplementedException();
+            return service.Delete(Request.Transform<Core.Models.KeyModel>(key))
+                 .Done(
+                 onSuccess: res => res.Transform(),
+                 onFailed: exp => Abstraction.Models.Result.Fail(I18n.Messages.Error_UnexpectedError)
+                 );
         }
-
 
         public Task<Abstraction.Models.Result> Update(Abstraction.Models.Host.UpdateHostModel model)
         {
-            throw new NotImplementedException();
+            var reply = service.Update(Request.Transform(model.Patch())).Done(
+                    onSuccess: res => res.Transform(),
+                    onFailed: exp => Result<BaseModel>.Fail(I18n.Messages.Error_UnexpectedError)
+                );
+
+            return reply;
         }
 
         public Task<Abstraction.Models.Result> SetAvailability(Abstraction.Models.Common.SetAvailabilityModel model)
         {
-            throw new NotImplementedException();
+            var reply = service.SetAvailability(Request.Transform(model.Patch())).Done(
+                    onSuccess: res => res.Transform(),
+                    onFailed: exp => Result<BaseModel>.Fail(I18n.Messages.Error_UnexpectedError)
+                );
+
+            return reply;
         }
 
         public Task<Abstraction.Models.ListResult<Abstraction.Models.Host.HostModel>> List(Abstraction.Models.Common.ListQueryModel model)
         {
-            throw new NotImplementedException();
+            return service.List(Request.Transform(listQuery: model.Patch()))
+                .Done(
+                    onSuccess: res => res.ListTransform(() => res.Data.Select(e => e.Unpatch())),
+                    onFailed: exp => ListResult<Abstraction.Models.Host.HostModel>.Fail(I18n.Messages.Error_UnexpectedError)
+                );
         }
 
         public Task<Abstraction.Models.Result<Abstraction.Models.Host.HostModel>> Get(string key)
         {
-            throw new NotImplementedException();
+            return service.Get(Request.Transform<Core.Models.KeyModel>(key))
+                 .Done(
+                    onSuccess: res => res.Transform(() => res.Data?.Unpatch()),
+                    onFailed: exp => Result<Abstraction.Models.Host.HostModel>.Fail(I18n.Messages.Error_UnexpectedError)
+                 );
         }
     }
 }

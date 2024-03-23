@@ -1,4 +1,6 @@
-﻿namespace Dariosoft.Framework
+﻿using Dariosoft.Framework.Types;
+
+namespace Dariosoft.Framework
 {
     public class Request
     {

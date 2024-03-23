@@ -2,6 +2,8 @@
 {
     public record CreateHostModel
     {
+        public string? ClientKey { get; set; }
+
         public required string Address { get; set; }
 
         public required int PortNumber { get; set; }

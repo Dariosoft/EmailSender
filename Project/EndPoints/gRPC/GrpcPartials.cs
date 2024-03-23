@@ -20,6 +20,26 @@
             };
     }
 
+    partial class GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel_
+    {
+        public static GrpcResult_ClientModel UnExcpectedError()
+            => new GrpcResult_ClientModel
+            {
+                IsSuccessful = false,
+                Errors = { new GrpcReason[] { new GrpcReason { Text = "Unexpected error.", Code = "" } } }
+            };
+    }
+
+    partial class GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_ListResult_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Client_ClientModel_
+    {
+        public static GrpcListResult_ClientModel UnExcpectedError()
+            => new GrpcListResult_ClientModel
+            {
+                IsSuccessful = false,
+                Errors = { new GrpcReason[] { new GrpcReason { Text = "Unexpected error.", Code = "" } } }
+            };
+    }
+
     partial class GrpcDariosoft_EmailSender_EndPoint_Abstraction_Models_Result_Dariosoft_EmailSender_EndPoint_Abstraction_Models_Host_HostModel_
     {
         public static GrpcResult_HostModel UnExcpectedError()

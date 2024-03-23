@@ -4,9 +4,9 @@ namespace Dariosoft.EmailSender.EndPoint.Abstraction.Models.Message
 {
     public record UpdateMessageModel
     {
-        public required string MessageKey { get; set; }
+        public required string Key { get; set; }
 
-        public required string SenderAccountKey { get; set; }
+        public required string SourceAccountKey { get; set; }
 
         public required string Subject { get; set; }
 

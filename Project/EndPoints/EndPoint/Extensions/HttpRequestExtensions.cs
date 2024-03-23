@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dariosoft.Framework.Types;
+using Microsoft.AspNetCore.Http;
 
 namespace Dariosoft.EmailSender.EndPoint
 {
 
     public static class HttpRequestExtensions
     {
-        public static Framework.Request Transform(this HttpRequest request, Framework.ListQueryModel? listQuery = null)
+        public static Framework.Request Transform(this HttpRequest request, ListQueryModel? listQuery = null)
         {
             return new Framework.Request
             {
@@ -20,7 +21,7 @@ namespace Dariosoft.EmailSender.EndPoint
             };
         }
 
-        public static Framework.Request<T> Transform<T>(this HttpRequest request, T payload, Framework.ListQueryModel? listQuery = null)
+        public static Framework.Request<T> Transform<T>(this HttpRequest request, T payload, ListQueryModel? listQuery = null)
         {
             return new Framework.Request<T>
             {

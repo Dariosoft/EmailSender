@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Dariosoft
+namespace Dariosoft.Framework
 {
     public static class TaskExtensions
     {

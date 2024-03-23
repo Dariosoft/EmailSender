@@ -1,4 +1,4 @@
-﻿namespace Dariosoft.Framework
+﻿namespace Dariosoft.Framework.Types
 {
     public record ListQueryModel
     {

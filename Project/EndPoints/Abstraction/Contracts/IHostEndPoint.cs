@@ -14,6 +14,4 @@
 
         Task<Models.Result<Models.Host.HostModel>> Get(string key);
     }
-
-
 }

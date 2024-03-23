@@ -2,13 +2,15 @@
 {
     public record UpdateAccountModel
     {
-        public required string AccountKey { get; set; }
+        public required string Key { get; set; }
+
+        public required string ClientKey { get; set; }
 
         public required string HostKey { get; set; }
 
         public required bool Enabled { get; set; }
 
-        public required string Username { get; set; }
+        public required string EmailAddress { get; set; }
 
         public required string Password { get; set; }
 
@@ -16,6 +18,6 @@
 
         public string? Description { get; set; }
 
-        public override string ToString() => Username;
+        public override string ToString() => EmailAddress;
     }
 }
