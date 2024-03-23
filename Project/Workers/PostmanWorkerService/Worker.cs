@@ -14,7 +14,7 @@ namespace Dariosoft.EmailSender.PostmanWorkerService
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                Console.WriteLine($@"{DateTime.UtcNow:yyyy-MMM-dd HH:mm:ss}\{Enum.GetName(currentPriority)}\{counter}> Trying to send...");
+                LogInfo($@"{DateTime.UtcNow:yyyy-MMM-dd HH:mm:ss}\{Enum.GetName(currentPriority)}\{counter}> Trying to send...");
                 reply = await messageService.TrySend(GetRequest());
 
                 if (!reply.IsSuccessful)
@@ -89,22 +89,32 @@ namespace Dariosoft.EmailSender.PostmanWorkerService
             }
         }
 
+        private void LogInfo(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
         private void LogSuccess(string message)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(message);
+            Console.ResetColor();
         }
 
         private void LogWarning(string message)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(message);
+            Console.ResetColor();
         }
 
         private void LogError(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Error.WriteLine(message);
+            Console.ResetColor();
         }
     }
 }
