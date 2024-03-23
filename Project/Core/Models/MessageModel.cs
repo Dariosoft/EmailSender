@@ -21,6 +21,8 @@ namespace Dariosoft.EmailSender.Core.Models
 
         public required Enums.MessageStatus Status { get; set; }
 
+        public required short NumberOfTries { get; set; }
+
         public MailAddress? From { get; set; }
 
         public required MailAddress[] To { get; set; }
@@ -96,5 +98,12 @@ namespace Dariosoft.EmailSender.Core.Models
         public IDictionary<string, string>? Headers { get; set; }
 
         public override string ToString() => Subject;
+    }
+
+    public record MessageStatusModel: KeyModel
+    {
+        public required Enums.MessageStatus Status { get; set; }
+
+        public bool AddLog { get; set; } = true;
     }
 }

@@ -180,6 +180,7 @@
                 Body = model.Body,
                 BodyIsHtml = model.BodyIsHtml,
                 Priority = model.Priority,
+                NumberOfTries = model.NumberOfTries,
                 From = model.From?.Unpatch(),
                 To = model.To.Select(e => e.Unpatch()).ToArray(),
                 Cc = model.Cc?.Select(e => e.Unpatch()).ToArray(),

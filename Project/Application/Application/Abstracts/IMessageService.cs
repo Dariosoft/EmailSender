@@ -1,4 +1,6 @@
-﻿namespace Dariosoft.EmailSender.Application
+﻿using System.Net.Mail;
+
+namespace Dariosoft.EmailSender.Application
 {
     public interface IMessageService : IService
     {
@@ -12,7 +14,9 @@
 
         Task<Framework.ListReply<Core.Models.MessageModel>> List(Framework.Request request);
 
-        Task<Framework.Reply> TrySend(Framework.Request<Core.Models.KeyModel> request);
+        Task<Framework.Reply<bool>> TrySend(Framework.Request<Core.Models.KeyModel> request);
+
+        Task<Reply<bool>> TrySend(Request<MailPriority> request);
 
         Task<Framework.Reply> TryCancel(Framework.Request<Core.Models.KeyModel> request);
     }

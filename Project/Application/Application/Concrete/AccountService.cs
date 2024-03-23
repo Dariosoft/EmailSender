@@ -19,6 +19,9 @@
 
             if (string.IsNullOrWhiteSpace(request.Payload.Password))
                 return Reply<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.Password));
+
+            if(!request.Payload.EmailAddress.IsValidEmailAddress())
+                return Reply<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress);
             #endregion
 
             #region Preparing prerequisite data
@@ -51,7 +54,7 @@
                 HostId = getHostResult.Data.Value,
                 Enabled = request.Payload.Enabled,
                 EmailAddress = emailAddress,
-                Password = Framework.Cryptography.PasswordEncoder.Encode(emailAddress, request.Payload.Password),
+                Password = AccountPasswordEncoder.Instnace.Encode(emailAddress, plainPassword: request.Payload.Password),
                 DisplayName = string.IsNullOrWhiteSpace(request.Payload.DisplayName) ? null : request.Payload.DisplayName.Trim(),
                 Description = string.IsNullOrWhiteSpace(request.Payload.Description) ? null : request.Payload.Description.Trim(),
             }; 
@@ -82,6 +85,9 @@
 
             if (string.IsNullOrWhiteSpace(request.Payload.Password))
                 return Reply.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.Password));
+
+            if (!request.Payload.EmailAddress.IsValidEmailAddress())
+                return Reply<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress);
             #endregion
 
             #region Preparing prerequisite data
@@ -114,7 +120,7 @@
                 HostId = getHostResult.Data.Value,
                 Enabled = request.Payload.Enabled,
                 EmailAddress = emailAddress,
-                Password = Framework.Cryptography.PasswordEncoder.Encode(emailAddress, request.Payload.Password),
+                Password = AccountPasswordEncoder.Instnace.Encode(emailAddress, plainPassword: request.Payload.Password),
                 DisplayName = string.IsNullOrWhiteSpace(request.Payload.DisplayName) ? null : request.Payload.DisplayName.Trim(),
                 Description = string.IsNullOrWhiteSpace(request.Payload.Description) ? null : request.Payload.Description.Trim(),
             };

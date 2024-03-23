@@ -20,11 +20,11 @@ namespace Dariosoft.Framework.Cryptography
                 : Encoding.UTF8.GetString(_encoder.Decrypt(HexStringHelper.FromHexString(cipherText), key));
         }
 
-        public static bool TryDecrypt(string data, string key, out string result)
+        public static bool TryDecrypt(string cipherText, string key, out string result)
         {
             try
             {
-                result = Decrypt(data, key);
+                result = Decrypt(cipherText, key);
                 return true;
             }
             catch
@@ -36,22 +36,22 @@ namespace Dariosoft.Framework.Cryptography
         #endregion
 
         #region Encrypt
-        public static string Encrypt(string data, string key)
+        public static string Encrypt(string plainText, string key)
         {
-            if (string.IsNullOrWhiteSpace(data))
+            if (string.IsNullOrWhiteSpace(plainText))
                 return string.Empty;
 
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
 
-            return string.IsNullOrEmpty(data) ? data : HexStringHelper.ToHexString(_encoder.Encrypt(data, key));
+            return string.IsNullOrEmpty(plainText) ? plainText : HexStringHelper.ToHexString(_encoder.Encrypt(plainText, key));
         }
 
-        public static bool TryEncrypt(string data, string key, out string result)
+        public static bool TryEncrypt(string plainText, string key, out string result)
         {
             try
             {
-                result = Encrypt(data, key);
+                result = Encrypt(plainText, key);
                 return true;
             }
             catch

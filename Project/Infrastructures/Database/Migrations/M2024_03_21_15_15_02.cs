@@ -1,4 +1,6 @@
-﻿using FluentMigrator;
+﻿using Dariosoft.EmailSender.Infrastructure.Database.DataSource.Tables;
+using FluentMigrator;
+using System.Net;
 
 namespace Dariosoft.EmailSender.Infrastructure.Database.Migrations
 {
@@ -73,6 +75,20 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Migrations
                 .PrimaryColumn(nameof(DataSource.Tables.FlaggedTable.Id));
 
             SetSerialIdentity(DataSource.DbSchema.Core, tblHost);
+
+            Insert.IntoTable(tblHost)
+                .InSchema(DataSource.DbSchema.Core)
+                .Row(new { 
+                    Id = Guid.NewGuid(),
+                    Flags = 0,
+                    CreationTime = DateTime.UtcNow,
+                    ClientId = (Guid?)null,
+                    Address = "smtp-relay.gmail.com",
+                    PortNumber = 587,
+                    UseSsl = true,
+                    Description = "google smtp relay",
+                    DescriptionRAW = "Google SMTP Relay"
+                });
             #endregion
 
             #region 4. Create Table: core.Account
@@ -153,6 +169,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Migrations
                 .WithColumn(nameof(DataSource.Tables.Message.Priority)).AsInt16()
                 .WithColumn(nameof(DataSource.Tables.Message.Status)).AsInt16()
                 .WithColumn(nameof(DataSource.Tables.Message.LastStatusTime)).AsDateTime()
+                .WithColumn(nameof(DataSource.Tables.Message.NumberOfTries)).AsInt16()
                 .WithColumn(nameof(DataSource.Tables.Message.From)).AsString(1024).Nullable()
                 .WithColumn(nameof(DataSource.Tables.Message.To)).AsGuid()
                 .WithColumn(nameof(DataSource.Tables.Message.Cc)).AsGuid().Nullable()

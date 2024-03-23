@@ -49,5 +49,17 @@ namespace Dariosoft.EmailSender.Application.Concrete
 
             return Reply<Guid?>.From(reply, () => reply.Data?.Id);
         }
+
+        protected Reply Fail(Request request, string where, Exception exception)
+        {
+            //TODO: Log
+            return Reply.Fail(I18n.Messages.Error_UnexpectedError);
+        }
+
+        protected Reply<T> Fail<T>(Request request, string where, Exception exception)
+        {
+            //TODO: Log
+            return Reply<T>.Fail(I18n.Messages.Error_UnexpectedError);
+        }
     }
 }

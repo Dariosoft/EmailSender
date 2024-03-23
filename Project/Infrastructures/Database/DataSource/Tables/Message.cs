@@ -16,6 +16,8 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.DataSource.Tables
 
         public required bool BodyIsHtml { get; set; }
 
+        public required short NumberOfTries { get; set; }
+
         public required MailPriority Priority { get; set; }
 
         public required Enums.MessageStatus Status { get; set; }

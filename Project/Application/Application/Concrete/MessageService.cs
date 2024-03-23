@@ -1,6 +1,15 @@
-﻿namespace Dariosoft.EmailSender.Application.Concrete
+﻿using Dariosoft.Framework;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Net.Mail;
+using System.Text;
+
+namespace Dariosoft.EmailSender.Application.Concrete
 {
-    internal class MessageService(ServiceInjection injection, Core.Repositories.IMessageRepository repository) : Service(injection), IMessageService
+    internal class MessageService(
+        ServiceInjection injection,
+        IPostmanService postmanService,
+        Core.Repositories.IMessageRepository repository) : Service(injection), IMessageService
     {
         public async Task<Reply<Core.Models.BaseModel>> Create(Request<Core.Models.CreateMessageModel> request)
         {
@@ -16,6 +25,18 @@
 
             if (request.Payload.To.Length == 0)
                 return Reply<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.Recipient));
+
+            if (request.Payload.To.Any(t => !t.DisplayName.IsValidEmailAddress()))
+                return Reply<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.To");
+
+            if (request.Payload.Cc?.Any(t => !t.DisplayName.IsValidEmailAddress()) == true)
+                return Reply<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.Cc");
+
+            if (request.Payload.Bcc?.Any(t => !t.DisplayName.IsValidEmailAddress()) == true)
+                return Reply<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.Bcc");
+
+            if (request.Payload.ReplyTo?.Any(t => !t.DisplayName.IsValidEmailAddress()) == true)
+                return Reply<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.ReplyTo");
             #endregion
 
             #region Preparing prerequisite data
@@ -41,6 +62,7 @@
                 SubjectIsHtml = request.Payload.SubjectIsHtml,
                 Body = request.Payload.Body,
                 BodyIsHtml = request.Payload.BodyIsHtml,
+                NumberOfTries = 0,
                 From = request.Payload.From,
                 To = request.Payload.To,
                 Cc = request.Payload.Cc,
@@ -93,6 +115,7 @@
                 SubjectIsHtml = request.Payload.SubjectIsHtml,
                 Body = request.Payload.Body,
                 BodyIsHtml = request.Payload.BodyIsHtml,
+                NumberOfTries = 0,
                 From = request.Payload.From,
                 To = request.Payload.To,
                 Cc = request.Payload.Cc,
@@ -131,16 +154,46 @@
             return repository.List(request);
         }
 
-        public Task<Reply> TrySend(Request<Core.Models.KeyModel> request)
+        public async Task<Reply<bool>> TrySend(Request<Core.Models.KeyModel> request)
         {
-            throw new NotImplementedException();
+            var getResult = await repository.Get(request);
+
+            if (!getResult.IsSuccessful) return Reply<bool>.From(getResult);
+
+            return await TrySend(request.Transform(getResult.Data));
+        }
+
+        public async Task<Reply<bool>> TrySend(Request<MailPriority> request)
+        {
+            var getResult = await repository.GetItemToSend(request);
+
+            if (!getResult.IsSuccessful) return Reply<bool>.From(getResult);
+
+            return await TrySend(request.Transform(getResult.Data));
+        }
+
+        private async Task<Reply<bool>> TrySend(Request<Core.Models.MessageModel?> request)
+        {
+            if (request.Payload is null) return Reply<bool>.SuccessWithWarning(false, I18n.Messages.Warning_RecordNotFound);
+
+            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+
+            var result = await postmanService.SendMail(request!, cancellationTokenSource.Token);
+
+            await repository.SetStatus(request.Transform(new Core.Models.MessageStatusModel
+            {
+                Id = request.Payload.Id,
+                Serial = request.Payload.Serial,
+                Status = result.IsSuccessful ? Enums.MessageStatus.Sent : Enums.MessageStatus.Failed,
+                AddLog = true,
+            }));
+
+            return result;
         }
 
         public Task<Reply> TryCancel(Request<Core.Models.KeyModel> request)
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

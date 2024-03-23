@@ -323,6 +323,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                         From = e.From,
                         Subject = e.Subject,
                         SubjectRAW = e.SubjectRAW,
+                        NumberOfTries = e.NumberOfTries,
                         Cc = e.Cc,
                         Bcc = e.Bcc,
                         To = e.To,
@@ -343,6 +344,119 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             catch (Exception e)
             {
                 return ListFail<Core.Models.MessageModel>(request, nameof(List), e);
+            }
+        }
+
+        public async Task<Reply<bool>> SetStatus(Request<Core.Models.MessageStatusModel> request)
+        {
+            try
+            {
+                var messageId = Guid.Empty;
+                await using (var context = GetDbContext())
+                {
+                    messageId = await context.Messages
+                                .Where(e => e.Id == request.Payload.Id || e.Serial == request.Payload.Serial)
+                                .Select(e => e.Id)
+                                .FirstOrDefaultAsync();
+
+                    if (messageId != Guid.Empty)
+                    {
+                        await using (var transaction = await context.BeginTransactionAsync(System.Data.IsolationLevel.Serializable))
+                        {
+                            try
+                            {
+                                await context.Messages
+                                    .Where(x => x.Id == messageId)
+                                    .Set(x => x.Status, request.Payload.Status)
+                                    .Set(x => x.LastStatusTime, request.When)
+                                    .UpdateAsync();
+
+                                if (request.Payload.AddLog)
+                                    await context.InsertAsync(new DataSource.Tables.MessageTrySendLog
+                                    {
+                                        MessageId = messageId,
+                                        When = request.When.UtcDateTime,
+                                        Status = request.Payload.Status
+                                    });
+
+                                await transaction.CommitAsync();
+                            }
+                            catch
+                            {
+                                await transaction.RollbackAsync();
+                                throw;
+                            }
+                        }
+                    }
+                }
+
+                return Reply<bool>.Success(messageId != Guid.Empty);
+            }
+            catch (Exception e)
+            {
+                return Fail<bool>(request, nameof(SetStatus), e);
+            }
+        }
+
+        public async Task<Reply<Core.Models.MessageModel?>> GetItemToSend(Request<MailPriority> request)
+        {
+            try
+            {
+                DataSource.Tables.Message? entity = null;
+                DataSource.Tables.MailAddressCollectionItem[]? mailAddresseItems = null;
+
+                await using (var context = GetDbContext())
+                {
+                    await using (var transaction = await context.BeginTransactionAsync(System.Data.IsolationLevel.Serializable))
+                    {
+                        try
+                        {
+                            entity = await context.Messages
+                                .Where(e => e.Priority == request.Payload && (e.Flags & DataSource.RecordFlag.Deleted) == 0)
+                                .Where(e => e.Status == Enums.MessageStatus.Pending || e.Status == Enums.MessageStatus.Failed)
+                                .OrderBy(e => e.Status)
+                                .ThenBy(e => e.NumberOfTries)
+                                .FirstOrDefaultAsync();
+
+                            if (entity is not null)
+                            {
+                                await context.Messages
+                                    .Where(e => e.Id == entity.Id)
+                                    .Set(e => e.Status, Enums.MessageStatus.Sending)
+                                    .Set(e => e.LastStatusTime, DateTime.UtcNow)
+                                    .Set(e => e.NumberOfTries, e => e.NumberOfTries + 1)
+                                    .UpdateAsync();
+                            }
+
+                            await transaction.CommitAsync();
+                        }
+                        catch
+                        {
+                            await transaction.RollbackAsync();
+
+                            throw;
+                        }
+                    }
+
+                    if (entity is not null)
+                    {
+                        mailAddresseItems = await context.MailAddressCollectionItems
+                            .Where(e => e.CollectionId == entity.To ||
+                                e.CollectionId == entity.Cc ||
+                                e.CollectionId == entity.Bcc ||
+                                e.CollectionId == entity.ReplyTo
+                            ).ToArrayAsync();
+                    }
+                }
+
+
+                return entity is null
+                    ? Reply<Core.Models.MessageModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
+                    : Reply<Core.Models.MessageModel?>.Success(ToModel(entity, mailAddresseItems!));
+            }
+            catch (Exception e)
+            {
+                return Fail<Core.Models.MessageModel?>(request, nameof(Get), e);
             }
         }
 

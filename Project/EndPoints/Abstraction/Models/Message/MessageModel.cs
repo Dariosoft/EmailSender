@@ -22,6 +22,8 @@ namespace Dariosoft.EmailSender.EndPoint.Abstraction.Models.Message
 
         public required Enums.MessageStatus Status { get; set; }
 
+        public required short NumberOfTries { get; set; }
+
         public Common.MailAddress? From { get; set; }
 
         public required Common.MailAddress[] To { get; set; }
