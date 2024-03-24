@@ -26,16 +26,16 @@ namespace Dariosoft.EmailSender.Application.Concrete
             if (request.Payload.To.Length == 0)
                 return Response<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.Recipient));
 
-            if (request.Payload.To.Any(t => !t.DisplayName.IsValidEmailAddress()))
+            if (request.Payload.To.Any(t => !t.Address.IsValidEmailAddress()))
                 return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.To");
 
-            if (request.Payload.Cc?.Any(t => !t.DisplayName.IsValidEmailAddress()) == true)
+            if (request.Payload.Cc?.Any(t => !t.Address.IsValidEmailAddress()) == true)
                 return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.Cc");
 
-            if (request.Payload.Bcc?.Any(t => !t.DisplayName.IsValidEmailAddress()) == true)
+            if (request.Payload.Bcc?.Any(t => !t.Address.IsValidEmailAddress()) == true)
                 return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.Bcc");
 
-            if (request.Payload.ReplyTo?.Any(t => !t.DisplayName.IsValidEmailAddress()) == true)
+            if (request.Payload.ReplyTo?.Any(t => !t.Address.IsValidEmailAddress()) == true)
                 return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.ReplyTo");
             #endregion
 
@@ -89,7 +89,19 @@ namespace Dariosoft.EmailSender.Application.Concrete
                 return Response.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.Subject));
 
             if (request.Payload.To.Length == 0)
-                return Response.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.Recipient));
+                return Response<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.Recipient));
+
+            if (request.Payload.To.Any(t => !t.Address.IsValidEmailAddress()))
+                return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.To");
+
+            if (request.Payload.Cc?.Any(t => !t.Address.IsValidEmailAddress()) == true)
+                return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.Cc");
+
+            if (request.Payload.Bcc?.Any(t => !t.Address.IsValidEmailAddress()) == true)
+                return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.Bcc");
+
+            if (request.Payload.ReplyTo?.Any(t => !t.Address.IsValidEmailAddress()) == true)
+                return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidEmailAddress, "MailMessage.ReplyTo");
             #endregion
 
             #region Preparing prerequisite data

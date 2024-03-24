@@ -13,7 +13,7 @@ namespace Dariosoft.ToHave
 
             builder.Services.AddEmailSenderGrpcSDK(sp => new ConnectionInfo
             {
-                EndPointAddress = "http://localhost:5039",
+                EndPointAddress = "http://localhost:5000",
                 ClientId = new Guid("0e479bb3-2422-47f4-b69c-36d41f8ab909"),
                 ApiKey = "t9cvv6d41f474799ksdr423449wkxi7y46b8pbxk",
             });
