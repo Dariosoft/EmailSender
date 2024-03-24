@@ -1,6 +1,6 @@
 @echo off
 cls
-SET ver=1.0.0
+SET ver=2.0.0
 SET sln=D:\Dariosoft\Projects\2024\EmailSender
 SET prj=%sln%\Project\EndPoints\Abstraction\Dariosoft.EmailSender.EndPoint.Abstraction.csproj
 SET pkg=%sln%\Project\EndPoints\Abstraction\bin\Release\Dariosoft.EmailSender.EndPoint.Abstraction.%ver%.nupkg

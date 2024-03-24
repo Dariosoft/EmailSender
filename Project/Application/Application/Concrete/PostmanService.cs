@@ -7,10 +7,10 @@ namespace Dariosoft.EmailSender.Application.Concrete
     class PostmanService(ServiceInjection injection)
         : Service(injection), IPostmanService
     {
-        public async Task<Reply<bool>> SendMail(Request<Core.Models.MessageModel> request, CancellationToken cancellationToken)
+        public async Task<IResponse<bool>> SendMail(IRequest<Core.Models.MessageModel> request, CancellationToken cancellationToken)
         {
             if (request.Payload is null)
-                return Reply<bool>.SuccessWithWarning(false, I18n.Messages.Warning_RecordNotFound);
+                return Response<bool>.SuccessWithWarning(false, I18n.Messages.Warning_RecordNotFound);
 
             var account = await GetAccount(request);
             var host = await GetHost(request, account.HostId);
@@ -38,15 +38,15 @@ namespace Dariosoft.EmailSender.Application.Concrete
             }
 
             return exception is null
-                ? Reply<bool>.Success(true)
-                : Reply<bool>.Fail(exception.Message, code: exception.GetType().FullName ?? exception.GetType().Name);  //Fail<bool>(request, nameof(SendMail), exception);
+                ? Response<bool>.Success(true)
+                : Response<bool>.Fail(exception.Message, code: exception.GetType().FullName ?? exception.GetType().Name);  //Fail<bool>(request, nameof(SendMail), exception);
         }
 
-        public Reply ClearCache(Request request)
+        public IResponse ClearCache(IRequest request)
         {
             _accounts.Clear();
             _hosts.Clear();
-            return Reply.Success();
+            return Response.Success();
         }
 
         private MailMessage PrepareMailMessage(Core.Models.AccountModel account, Core.Models.MessageModel message)
@@ -89,7 +89,7 @@ namespace Dariosoft.EmailSender.Application.Concrete
             return mail;
         }
 
-        private async Task<Core.Models.AccountModel> GetAccount(Request<Core.Models.MessageModel> request)
+        private async Task<Core.Models.AccountModel> GetAccount(IRequest<Core.Models.MessageModel> request)
         {
             if (_accounts.TryGetValue(request.Payload.AccountId, out var account))
                 return account;
@@ -106,7 +106,7 @@ namespace Dariosoft.EmailSender.Application.Concrete
             return account!;
         }
 
-        private async Task<Core.Models.HostModel> GetHost(Request<Core.Models.MessageModel> request, Guid hostId)
+        private async Task<Core.Models.HostModel> GetHost(IRequest<Core.Models.MessageModel> request, Guid hostId)
         {
             if (_hosts.TryGetValue(hostId, out var host))
                 return host;

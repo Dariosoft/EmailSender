@@ -2,7 +2,7 @@
 {
     internal class HostRepository(RepositoryInjection injection) : Repository(injection), Core.Repositories.IHostRepository
     {
-        public async Task<Reply> Create(Request<Core.Models.HostModel> request)
+        public async Task<IResponse> Create(IRequest<Core.Models.HostModel> request)
         {
             try
             {
@@ -17,7 +17,7 @@
                         .FirstOrDefaultAsync();
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -25,7 +25,7 @@
             }
         }
 
-        public async Task<Reply> Update(Request<Core.Models.HostModel> request)
+        public async Task<IResponse> Update(IRequest<Core.Models.HostModel> request)
         {
             try
             {
@@ -54,7 +54,7 @@
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -62,10 +62,10 @@
             }
         }
 
-        public async Task<Reply> Delete(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
+                return Response.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
 
             try
             {
@@ -104,7 +104,7 @@
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -112,10 +112,10 @@
             }
         }
 
-        public async Task<Reply<Core.Models.HostModel?>> Get(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse<Core.Models.HostModel?>> Get(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply<Core.Models.HostModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
+                return Response<Core.Models.HostModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
 
             try
             {
@@ -130,8 +130,8 @@
                 }
 
                 return entity is null
-                    ? Reply<Core.Models.HostModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
-                    : Reply<Core.Models.HostModel?>.Success(ModelMapper.ToModel(entity));
+                    ? Response<Core.Models.HostModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
+                    : Response<Core.Models.HostModel?>.Success(ModelMapper.ToModel(entity));
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@
             }
         }
 
-        public async Task<Reply> SetAvailability(Request<Core.Models.SetAvailabilityModel> request)
+        public async Task<IResponse> SetAvailability(IRequest<Core.Models.SetAvailabilityModel> request)
         {
             try
             {
@@ -154,7 +154,7 @@
                         .UpdateAsync();
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -162,7 +162,7 @@
             }
         }
 
-        public async Task<ListReply<Core.Models.HostModel>> List(Request request)
+        public async Task<IListResponse<Core.Models.HostModel>> List(IRequest request)
         {
             try
             {
@@ -181,6 +181,9 @@
                             e.Address.Contains(filterText) ||
                             e.Description.Contains(filterText)
                         );
+
+                    if (request.User.Type != Framework.Types.UserType.SuperAdmin && request.User.Type != Framework.Types.UserType.System)
+                        query = query.Where(e => e.ClientId == null || e.ClientId == request.User.GetUserId());
 
                     switch (sortFiled)
                     {
@@ -230,7 +233,7 @@
                                    ).ToArrayAsync();
                 }
 
-                return ListReply<Core.Models.HostModel>.Success(
+                return ListResponse<Core.Models.HostModel>.Success(
                     data: items,
                     totalItems: totalItems,
                     pageNumber: request.ListQuery?.Page ?? 1,

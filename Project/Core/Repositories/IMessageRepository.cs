@@ -2,18 +2,18 @@
 {
     public interface IMessageRepository : IRepository
     {
-        Task<Reply> Create(Request<Core.Models.MessageModel> request);
+        Task<IResponse> Create(IRequest<Core.Models.MessageModel> request);
 
-        Task<Reply> Update(Request<Core.Models.MessageModel> request);
+        Task<IResponse> Update(IRequest<Core.Models.MessageModel> request);
 
-        Task<Reply> Delete(Request<Core.Models.KeyModel> request);
+        Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request);
 
-        Task<Reply<Core.Models.MessageModel?>> Get(Request<Core.Models.KeyModel> request);
+        Task<IResponse<Core.Models.MessageModel?>> Get(IRequest<Core.Models.KeyModel> request);
 
-        Task<ListReply<Core.Models.MessageModel>> List(Request request);
+        Task<IListResponse<Core.Models.MessageModel>> List(IRequest request);
 
-        Task<Reply<bool>> SetStatus(Request<Core.Models.MessageStatusModel> request);
+        Task<IResponse<bool>> SetStatus(IRequest<Core.Models.MessageStatusModel> request);
 
-        Task<Reply<Core.Models.MessageModel?>> GetItemToSend(Request<Core.Models.MessageGetHeadItem> request);
+        Task<IResponse<Core.Models.MessageModel?>> GetItemToSend(IRequest<Core.Models.MessageGetHeadItem> request);
     }
 }

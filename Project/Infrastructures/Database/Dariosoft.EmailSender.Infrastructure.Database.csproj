@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Dariosoft\Cryptography\Dariosoft.Framework.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Core\Core\Dariosoft.EmailSender.Core.csproj" />
     <ProjectReference Include="..\..\Core\Repositories\Dariosoft.EmailSender.Core.Repositories.csproj" />
   </ItemGroup>
 

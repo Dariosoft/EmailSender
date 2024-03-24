@@ -11,7 +11,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Dariosoft.EmailSender.EndPoint.Abstraction" Version="1.0.0" />
+		<PackageReference Include="Dariosoft.EmailSender.EndPoint.Abstraction" Version="2.0.0" />
 		<PackageReference Include="Google.Protobuf" Version="3.26.0" PrivateAssets="Compile" />
 		<PackageReference Include="Grpc.Net.Client" Version="2.61.0" PrivateAssets="Compile" />
 		<PackageReference Include="Grpc.Tools" Version="2.62.0">

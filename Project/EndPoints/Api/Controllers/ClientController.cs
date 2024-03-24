@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dariosoft.EmailSender.EndPoint.Api.Controllers
 {
+    /*
     [ApiController, Route("api/client")]
     public class ClientController(Abstraction.Contracts.IClientEndPoint endPoint) : ControllerBase
     {
@@ -33,5 +34,5 @@ namespace Dariosoft.EmailSender.EndPoint.Api.Controllers
         [HttpPost("set-availability")]
         public Task<Result> SetAvailability([FromBody] SetAvailabilityModel model)
             => endPoint.SetAvailability(model);
-    }
+    }*/
 }

@@ -1,6 +1,4 @@
-﻿using Dariosoft.Framework;
-
-namespace Dariosoft.EmailSender.EndPoint.gRPC
+﻿namespace Dariosoft.EmailSender.EndPoint.gRPC
 {
     public class ModelMapper
     {
@@ -183,11 +181,11 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 Id = input.Id,
                 Serial = input.Serial,
                 CreationTime = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(input.CreationTime),
-                Name = input.Name,
-                Description = input.Description,
-                AccessKey = input.AccessKey,
+                Name = input.Name ?? "",
+                Description = input.Description ?? "",
+                AccessKey = input.AccessKey ?? "",
                 Enabled = input.Enabled,
-                AdminUserName = input.AdminUserName,
+                AdminUserName = input.AdminUserName ?? "",
             };
 
         public GrpcResult_ClientModel ToGrpc(Abstraction.Models.Result<Abstraction.Models.Client.ClientModel> input)
@@ -217,13 +215,13 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 Id = input.Id,
                 Serial = input.Serial,
                 CreationTime = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(input.CreationTime),
-                Address = input.Address,
-                Description = input.Description,
+                Address = input.Address ?? "",
+                Description = input.Description ?? "",
                 PortNumber = input.PortNumber,
                 UseSsl = input.UseSsl,
                 Enabled = input.Enabled,
                 ClientId = new Abstraction.GrpcInterface.GrpcValueMessage_Guid { Value = (input.ClientId ?? Guid.Empty).ToString().ToLower() },
-                ClientName = input.ClientName,
+                ClientName = input.ClientName ?? "",
             };
 
         public GrpcResult_HostModel ToGrpc(Abstraction.Models.Result<Abstraction.Models.Host.HostModel> input)
@@ -253,14 +251,14 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 Id = input.Id,
                 Serial = input.Serial,
                 ClientId = input.ClientId,
-                ClientName = input.ClientName,
-                Host = input.Host,
+                ClientName = input.ClientName ?? "",
+                Host = input.Host ?? "",
                 HostId = input.HostId,
                 CreationTime = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(input.CreationTime),
-                DisplayName = input.DisplayName,
-                EmailAddress = input.EmailAddress,
-                Password = input.Password,
-                Description = input.Description,
+                DisplayName = input.DisplayName ?? "",
+                EmailAddress = input.EmailAddress ?? "",
+                Password = input.Password ?? "",
+                Description = input.Description ?? "",
                 Enabled = input.Enabled,
             };
 
@@ -286,7 +284,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
             };
 
         public GrpcModel_MailAddress ToGrpc(Abstraction.Models.Common.MailAddress input)
-            => new GrpcModel_MailAddress { Address = input.Address, DisplayName = input.DisplayName };
+            => new GrpcModel_MailAddress { Address = input.Address ?? "", DisplayName = input.DisplayName ?? "" };
 
         public GrpcModel_Message ToGrpc(Abstraction.Models.Message.MessageModel input)
             => new GrpcModel_Message
@@ -298,14 +296,14 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
                 Priority = (Abstraction.GrpcInterface.GrpcMailPriority)input.Priority,
                 SubjectIsHtml = input.SubjectIsHtml,
                 BodyIsHtml = input.BodyIsHtml,
-                Subject = input.Subject,
-                Body = input.Body,
+                Subject = input.Subject ?? "",
+                Body = input.Body ?? "",
                 Bcc = { (input.Bcc ?? []).Select(ToGrpc) },
                 Cc = { (input.Cc ?? []).Select(ToGrpc) },
                 To = { (input.To ?? []).Select(ToGrpc) },
                 ReplyTo = { (input.ReplyTo ?? []).Select(ToGrpc) },
                 From = input.From is null ? null : ToGrpc(input.From),
-                Headers = { input.Headers },
+                Headers = { input.Headers ?? new Dictionary<string, string>() },
                 NumberOfTries = new Abstraction.GrpcInterface.GrpcValueMessage_Short { Value = input.NumberOfTries.ToString() },
             };
 

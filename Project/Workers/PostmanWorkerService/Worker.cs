@@ -9,7 +9,7 @@ namespace Dariosoft.EmailSender.PostmanWorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Reply<bool> reply;
+            IResponse<bool> reply;
             Console.Clear();
 
             while (!stoppingToken.IsCancellationRequested)
@@ -42,18 +42,25 @@ namespace Dariosoft.EmailSender.PostmanWorkerService
         private int counter, max = 5;
         private MailPriority currentPriority = MailPriority.High;
 
-        private Request<MailPriority> GetRequest()
+        private IRequest<MailPriority> GetRequest()
         {
             return new Request<MailPriority>
             {
-                UserId = Guid.Empty.ToString().ToLower(),
-                UserIsAnonymous = false,
-                UserName = "PostmanWorkerService",
                 When = DateTimeOffset.UtcNow,
                 Where = "PostmanWorkerService.ExecuteAsync()",
                 UserIP = Framework.Helpers.MiscHelper.Instance.GetLocalIP().ToString(),
                 UserAgent = Environment.OSVersion.VersionString,
-                Payload = currentPriority
+                Payload = currentPriority,
+                User = new Framework.Auth.UserIdentity 
+                { 
+                    Id = Guid.Empty.ToString(),
+                    Serial = 0,
+                    Type = Framework.Types.UserType.System,
+                    IsAuthenticated = true,
+                    UserIsAnonymouse = false,
+                    UserName = "PostmanWorkerService",
+                    DisplayName = "Postman Worker Service"
+                }
             };
         }
 

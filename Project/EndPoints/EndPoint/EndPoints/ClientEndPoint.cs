@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 namespace Dariosoft.EmailSender.EndPoint.EndPoints
 {
     class ClientEndPoint(IHttpContextAccessor contextAccessor, Application.IClientService service)
-        : EndPoint(contextAccessor.HttpContext), Abstraction.Contracts.IClientEndPoint
+        : EndPoint(contextAccessor.HttpContext!), Abstraction.Contracts.IClientEndPoint
     {
         public Task<Result<BaseModel>> Create(Abstraction.Models.Client.CreateClientModel model)
         {

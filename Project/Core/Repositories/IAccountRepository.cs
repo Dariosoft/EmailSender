@@ -2,16 +2,16 @@
 {
     public interface IAccountRepository : IRepository
     {
-        Task<Reply> Create(Request<Core.Models.AccountModel> request);
+        Task<IResponse> Create(IRequest<Core.Models.AccountModel> request);
 
-        Task<Reply> Update(Request<Core.Models.AccountModel> request);
+        Task<IResponse> Update(IRequest<Core.Models.AccountModel> request);
 
-        Task<Reply> Delete(Request<Core.Models.KeyModel> request);
+        Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request);
 
-        Task<Reply<Core.Models.AccountModel?>> Get(Request<Core.Models.KeyModel> request);
+        Task<IResponse<Core.Models.AccountModel?>> Get(IRequest<Core.Models.KeyModel> request);
 
-        Task<Reply> SetAvailability(Request<Core.Models.SetAvailabilityModel> request);
+        Task<IResponse> SetAvailability(IRequest<Core.Models.SetAvailabilityModel> request);
 
-        Task<ListReply<Core.Models.AccountModel>> List(Request request);
+        Task<IListResponse<Core.Models.AccountModel>> List(IRequest request);
     }
 }

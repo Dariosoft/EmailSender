@@ -113,5 +113,21 @@ namespace Dariosoft.Framework
 
             return Regex.IsMatch(pattern: @"(?i)^\w{1,}[\w-\.]{0,}@\w{1,}\.{1}\w{1,}(\.\w+){0,}$", input: input);
         }
+
+        /// <summary>
+        /// Trims the input string 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="trimChars"></param>
+        /// <returns></returns>
+        public static string TrimX(this string s, params char[] trimChars)
+          => (s ?? "").Trim((trimChars ?? Array.Empty<char>()).Union(new char[] { ' ', '\t', '\r', '\n' }).ToArray());
+
+        public static string TrimStartX(this string s, params char[] trimChars)
+           => (s ?? "").TrimStart((trimChars ?? Array.Empty<char>()).Union(new char[] { ' ', '\t', '\r', '\n' }).ToArray());
+
+        public static string TrimEndX(this string s, params char[] trimChars)
+          => (s ?? "").TrimEnd((trimChars ?? Array.Empty<char>()).Union(new char[] { ' ', '\t', '\r', '\n' }).ToArray());
+
     }
 }

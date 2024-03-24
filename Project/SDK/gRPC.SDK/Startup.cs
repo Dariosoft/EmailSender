@@ -7,6 +7,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC.SDK
         public static IServiceCollection AddEmailSenderGrpcSDK(this IServiceCollection services, Func<IServiceProvider, IConnectionInfo> connectionInfoProvider)
         {
             return services
+                //  .AddSingleton<Abstraction.Contracts.IClientEndPoint, Services.ClientService>()
                 .AddSingleton<Abstraction.Contracts.IHostEndPoint, Services.HostService>()
                 .AddSingleton<Abstraction.Contracts.IAccountEndPoint, Services.AccountService>()
                 .AddSingleton<Abstraction.Contracts.IMessageEndPoint, Services.MessageService>()

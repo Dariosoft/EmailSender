@@ -1,4 +1,5 @@
-using Dariosoft.EmailSender.EndPoint.gRPC.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dariosoft.EmailSender.EndPoint.gRPC
 {
@@ -12,15 +13,25 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC
             builder.Services
                 .AddEndPointLayer(builder.Configuration)
                 .AddHttpContextAccessor()
-                .AddGrpc();
+                .AddGrpc()
+                .Services
+                .AddAuthentication(defaultScheme: "Dariosoft")
+                .AddScheme<EndPoint.Auth.AuthOptions, EndPoint.Auth.AuthenticationHandler>("Dariosoft", options => { })
+                .Services
+                .AddSingleton<IAuthorizationPolicyProvider, EndPoint.Auth.AuthorizationPolicyProvider>()
+                .AddSingleton<IAuthorizationHandler, EndPoint.Auth.AuthorizationHandler>()
+                .AddAuthorization();
 
             var app = builder.Build();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             // Configure the HTTP request pipeline.
-            app.MapGrpcService<ClientService>();
-            app.MapGrpcService<HostService>();
-            app.MapGrpcService<AccountService>();
-            app.MapGrpcService<MessageService>();
+            app.MapGrpcService<Services.ClientService>();
+            app.MapGrpcService<Services.HostService>();
+            app.MapGrpcService<Services.AccountService>();
+            app.MapGrpcService<Services.MessageService>();
 
             app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 

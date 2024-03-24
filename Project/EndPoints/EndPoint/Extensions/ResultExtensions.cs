@@ -3,7 +3,7 @@
     public static class ResultExtensions
     {
         public static Abstraction.Models.Result Transform<TReply>(this TReply reply)
-           where TReply : Framework.Reply
+           where TReply : Framework.IResponse
            => new Abstraction.Models.Result
            {
                IsSuccessful = reply.IsSuccessful,
@@ -12,7 +12,7 @@
            };
 
         public static Abstraction.Models.Result<T> Transform<T, TReply>(this TReply reply, Func<T?> getData)
-           where TReply : Framework.Reply
+           where TReply : Framework.IResponse
            => new Abstraction.Models.Result<T>
            {
                IsSuccessful = reply.IsSuccessful,
@@ -21,7 +21,7 @@
                Data = reply.IsSuccessful ? getData() : default,
            };
 
-        public static Abstraction.Models.ListResult<T> ListTransform<T, TReply>(this Framework.ListReply<TReply> reply, Func<IEnumerable<T>> getData)
+        public static Abstraction.Models.ListResult<T> ListTransform<T, TReply>(this Framework.IListResponse<TReply> reply, Func<IEnumerable<T>> getData)
            => new Abstraction.Models.ListResult<T>
            {
                IsSuccessful = reply.IsSuccessful,

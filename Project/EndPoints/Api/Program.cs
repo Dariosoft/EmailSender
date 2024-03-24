@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using System.Threading.Tasks;
 
@@ -16,8 +18,13 @@ namespace Dariosoft.EmailSender.EndPoint.Api
                 .AddEndPointLayer(builder.Configuration)
                 .AddHttpContextAccessor()
                 .AddControllers()
-                ;
-
+                .Services
+                .AddAuthentication(defaultScheme: "Dariosoft")
+                .AddScheme<EndPoint.Auth.AuthOptions, EndPoint.Auth.AuthenticationHandler>("Dariosoft", options => { })
+                .Services
+                .AddSingleton<IAuthorizationPolicyProvider, EndPoint.Auth.AuthorizationPolicyProvider>()
+                .AddSingleton<IAuthorizationHandler, EndPoint.Auth.AuthorizationHandler>()
+                .AddAuthorization();
 
             if (builder.Environment.IsDevelopment())
             {
@@ -54,13 +61,14 @@ namespace Dariosoft.EmailSender.EndPoint.Api
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseAuthorization();
 

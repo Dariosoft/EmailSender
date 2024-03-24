@@ -4,7 +4,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
 {
     internal class AccountRepository(RepositoryInjection injection) : Repository(injection), Core.Repositories.IAccountRepository
     {
-        public async Task<Reply> Create(Request<Core.Models.AccountModel> request)
+        public async Task<IResponse> Create(IRequest<Core.Models.AccountModel> request)
         {
             try
             {
@@ -19,7 +19,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                         .FirstOrDefaultAsync();
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -27,7 +27,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply> Update(Request<Core.Models.AccountModel> request)
+        public async Task<IResponse> Update(IRequest<Core.Models.AccountModel> request)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -66,10 +66,10 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply> Delete(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
+                return Response.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
 
             try
             {
@@ -103,7 +103,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -111,10 +111,10 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply<Core.Models.AccountModel?>> Get(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse<Core.Models.AccountModel?>> Get(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply<Core.Models.AccountModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
+                return Response<Core.Models.AccountModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
 
             try
             {
@@ -129,8 +129,8 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                 }
 
                 return entity is null
-                    ? Reply<Core.Models.AccountModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
-                    : Reply<Core.Models.AccountModel?>.Success(ModelMapper.ToModel(entity));
+                    ? Response<Core.Models.AccountModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
+                    : Response<Core.Models.AccountModel?>.Success(ModelMapper.ToModel(entity));
             }
             catch (Exception e)
             {
@@ -138,7 +138,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply> SetAvailability(Request<Core.Models.SetAvailabilityModel> request)
+        public async Task<IResponse> SetAvailability(IRequest<Core.Models.SetAvailabilityModel> request)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                         .UpdateAsync();
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -161,7 +161,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<ListReply<Core.Models.AccountModel>> List(Request request)
+        public async Task<IListResponse<Core.Models.AccountModel>> List(IRequest request)
         {
             try
             {
@@ -240,7 +240,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                                  ).ToArrayAsync();
                 }
 
-                return ListReply<Core.Models.AccountModel>.Success(
+                return ListResponse<Core.Models.AccountModel>.Success(
                     data: items,
                     totalItems: totalItems,
                     pageNumber: request.ListQuery?.Page ?? 1,

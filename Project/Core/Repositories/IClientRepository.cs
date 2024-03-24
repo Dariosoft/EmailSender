@@ -2,16 +2,16 @@
 {
     public interface IClientRepository : IRepository
     {
-        Task<Reply> Create(Request<Models.ClientModel> request);
+        Task<IResponse> Create(IRequest<Models.ClientModel> request);
 
-        Task<Reply> Update(Request<Core.Models.ClientModel> request);
+        Task<IResponse> Update(IRequest<Core.Models.ClientModel> request);
 
-        Task<Reply> Delete(Request<Core.Models.KeyModel> request);
+        Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request);
 
-        Task<Reply<Core.Models.ClientModel?>> Get(Request<Core.Models.KeyModel> request);
+        Task<IResponse<Core.Models.ClientModel?>> Get(IRequest<Core.Models.KeyModel> request);
 
-        Task<ListReply<Core.Models.ClientModel>> List(Request request);
+        Task<IListResponse<Core.Models.ClientModel>> List(IRequest request);
 
-        Task<Reply> SetAvailability(Request<Core.Models.SetAvailabilityModel> request);
+        Task<IResponse> SetAvailability(IRequest<Core.Models.SetAvailabilityModel> request);
     }
 }

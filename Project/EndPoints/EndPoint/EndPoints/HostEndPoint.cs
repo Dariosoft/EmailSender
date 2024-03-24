@@ -1,10 +1,10 @@
 ﻿using Dariosoft.EmailSender.EndPoint.Abstraction.Models.Common;
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dariosoft.EmailSender.EndPoint.EndPoints
 {
-
     class HostEndPoint(IHttpContextAccessor contextAccessor, Application.IHostService service)
         : EndPoint(contextAccessor.HttpContext), Abstraction.Contracts.IHostEndPoint
     {

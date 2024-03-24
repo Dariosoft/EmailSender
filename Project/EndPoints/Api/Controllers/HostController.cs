@@ -1,12 +1,13 @@
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models;
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models.Common;
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models.Host;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace Dariosoft.EmailSender.EndPoint.Api.Controllers
 {
-    [ApiController, Route("api/host")]
+    [ApiController, Route("api/host"), Authorize]
     public class HostController(Abstraction.Contracts.IHostEndPoint endPoint) : ControllerBase
     {
 

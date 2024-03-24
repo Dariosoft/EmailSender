@@ -78,14 +78,15 @@ namespace Dariosoft.Framework.Helpers
         #endregion
 
         #region GetValue
-        public T GetValue<T>(string name)
-            where T : Enum => (Enum.TryParse(typeof(T), name, out var result) && result is not null ? (T)result : default)!;
+        public T GetValue<T>(string name, T defaultValue = default)
+            where T : Enum  
+            => (Enum.TryParse(typeof(T), name, out var result) && result is not null ? (T)result : defaultValue)!;
 
-        public T GetValue<T>(long value)
+        public T GetValue<T>(long value, T defaultValue = default)
             where T : Enum
         {
             var name = Enum.GetName(typeof(T), value);
-            return (string.IsNullOrWhiteSpace(name) ? default : GetValue<T>(name))!;
+            return (string.IsNullOrWhiteSpace(name) ? default : GetValue<T>(name, defaultValue))!;
         }
         #endregion
 

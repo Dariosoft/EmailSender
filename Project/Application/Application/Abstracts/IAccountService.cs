@@ -2,16 +2,16 @@
 {
     public interface IAccountService : IService
     {
-        Task<Framework.Reply<Core.Models.BaseModel>> Create(Framework.Request<Core.Models.CreateAccountModel> request);
+        Task<Framework.IResponse<Core.Models.BaseModel>> Create(Framework.IRequest<Core.Models.CreateAccountModel> request);
 
-        Task<Framework.Reply> Update(Framework.Request<Core.Models.UpdateAccountModel> request);
+        Task<Framework.IResponse> Update(Framework.IRequest<Core.Models.UpdateAccountModel> request);
 
-        Task<Framework.Reply> Delete(Framework.Request<Core.Models.KeyModel> request);
+        Task<Framework.IResponse> Delete(Framework.IRequest<Core.Models.KeyModel> request);
 
-        Task<Framework.Reply<Core.Models.AccountModel?>> Get(Framework.Request<Core.Models.KeyModel> request);
+        Task<Framework.IResponse<Core.Models.AccountModel?>> Get(Framework.IRequest<Core.Models.KeyModel> request);
 
-        Task<Framework.ListReply<Core.Models.AccountModel>> List(Framework.Request request);
+        Task<Framework.IListResponse<Core.Models.AccountModel>> List(Framework.IRequest request);
 
-        Task<Framework.Reply> SetAvailability(Framework.Request<Core.Models.SetAvailabilityModel> request);
+        Task<Framework.IResponse> SetAvailability(Framework.IRequest<Core.Models.SetAvailabilityModel> request);
     }
 }

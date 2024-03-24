@@ -2,11 +2,12 @@ using Dariosoft.EmailSender.EndPoint.Abstraction.Models;
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models.Common;
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models.Account;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Dariosoft.EmailSender.EndPoint.Api.Controllers
 {
-    [ApiController, Route("api/account")]
+    [ApiController, Route("api/account"), Authorize]
     public class AccountController(Abstraction.Contracts.IAccountEndPoint endPoint) : ControllerBase
     {
 

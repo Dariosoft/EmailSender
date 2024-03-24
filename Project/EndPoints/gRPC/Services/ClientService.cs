@@ -1,8 +1,10 @@
 using Dariosoft.EmailSender.EndPoint.Abstraction.GrpcInterface;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dariosoft.EmailSender.EndPoint.gRPC.Services
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class ClientService(Abstraction.Contracts.IClientEndPoint endpoint) : GrpcClientEndPoint.GrpcClientEndPointBase
     {
         public override Task<GrpcResult_BaseModel> Create(GrpcClientEndPoint_Create_RequestMessage request, ServerCallContext context)

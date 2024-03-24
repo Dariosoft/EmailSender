@@ -15,10 +15,13 @@
                 var reply = await _client.CreateAsync(ModelMapper.ToGrpcHost_CreateRequestMessage(model));
                 return ModelMapper.FromGrpc(reply);
             }
+            catch (RpcException e)
+            {
+                return GrpcFailed<Models.Common.BaseModel>(e);
+            }
             catch (Exception e)
             {
-                //TODO: Log
-                return Models.Result<Models.Common.BaseModel>.Fail("Unexpected Error.");
+                return Failed<Models.Common.BaseModel>(e);
             }
         }
 
@@ -29,10 +32,13 @@
                 var reply = await _client.DeleteAsync(ModelMapper.ToGrpcHost_DeleteRequestMessage(key));
                 return ModelMapper.FromGrpc(reply);
             }
+            catch (RpcException e)
+            {
+                return GrpcFailed(e);
+            }
             catch (Exception e)
             {
-                //TODO: Log
-                return Models.Result.Fail("Unexpected Error.");
+                return Failed(e);
             }
         }
 
@@ -43,10 +49,13 @@
                 var reply = await _client.GetAsync(ModelMapper.ToGrpcHost_GetRequestMessage(key));
                 return ModelMapper.FromGrpc(reply);
             }
+            catch (RpcException e)
+            {
+                return GrpcFailed<Models.Host.HostModel>(e);
+            }
             catch (Exception e)
             {
-                //TODO: Log
-                return Models.Result<Models.Host.HostModel>.Fail("Unexpected Error.");
+                return Failed<Models.Host.HostModel>(e);
             }
         }
 
@@ -57,10 +66,13 @@
                 var reply = await _client.ListAsync(ModelMapper.ToGrpcHost_ListRequestMessage(model));
                 return ModelMapper.FromGrpc(reply);
             }
+            catch (RpcException e)
+            {
+                return GrpcListFailed<Models.Host.HostModel>(e);
+            }
             catch (Exception e)
             {
-                //TODO: Log
-                return Models.ListResult<Models.Host.HostModel>.Fail("Unexpected Error.");
+                return ListFailed<Models.Host.HostModel>(e);
             }
         }
 
@@ -71,10 +83,13 @@
                 var reply = await _client.SetAvailabilityAsync(ModelMapper.ToGrpcHost_SetAvailabilityRequestMessage(model));
                 return ModelMapper.FromGrpc(reply);
             }
+            catch (RpcException e)
+            {
+                return GrpcFailed(e);
+            }
             catch (Exception e)
             {
-                //TODO: Log
-                return Models.Result.Fail("Unexpected Error.");
+                return Failed(e);
             }
         }
 
@@ -85,10 +100,13 @@
                 var reply = await _client.UpdateAsync(ModelMapper.ToGrpcHost_UpdateRequestMessage(model));
                 return ModelMapper.FromGrpc(reply);
             }
+            catch (RpcException e)
+            {
+                return GrpcFailed(e);
+            }
             catch (Exception e)
             {
-                //TODO: Log
-                return Models.Result.Fail("Unexpected Error.");
+                return Failed(e);
             }
         }
 

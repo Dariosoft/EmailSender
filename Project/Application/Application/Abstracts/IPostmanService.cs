@@ -2,9 +2,9 @@
 {
     public interface IPostmanService : IService
     {
-        Task<Reply<bool>> SendMail(Request<Core.Models.MessageModel> request, CancellationToken cancellationToken);
+        Task<IResponse<bool>> SendMail(IRequest<Core.Models.MessageModel> request, CancellationToken cancellationToken);
 
-        Reply ClearCache(Request request);
+        IResponse ClearCache(IRequest request);
     }
 }
 

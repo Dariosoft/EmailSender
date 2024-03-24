@@ -1,7 +1,4 @@
-﻿using Dariosoft.EmailSender.Core.Models;
-using Microsoft.Extensions.Configuration;
-
-namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
+﻿namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
 {
 
     internal abstract class Repository(RepositoryInjection injection)
@@ -9,22 +6,22 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
         protected DataSource.DbContext GetDbContext()
             => new DataSource.DbContext(injection.GetMainConnectionString());
 
-        protected Reply Fail(Request request, string where, Exception exception)
+        protected IResponse Fail(IRequest request, string where, Exception exception)
         {
             //TODO: Log
-            return Reply.Fail(I18n.Messages.Error_UnexpectedError);
+            return Response.Fail(I18n.Messages.Error_UnexpectedError);
         }
 
-        protected Reply<T> Fail<T>(Request request, string where, Exception exception)
+        protected IResponse<T> Fail<T>(IRequest request, string where, Exception exception)
         {
             //TODO: Log
-            return Reply<T>.Fail(I18n.Messages.Error_UnexpectedError);
+            return Response<T>.Fail(I18n.Messages.Error_UnexpectedError);
         }
 
-        protected ListReply<T> ListFail<T>(Request request, string where, Exception exception)
+        protected IListResponse<T> ListFail<T>(IRequest request, string where, Exception exception)
         {
             //TODO: Log
-            return ListReply<T>.Fail(I18n.Messages.Error_UnexpectedError);
+            return ListResponse<T>.Fail(I18n.Messages.Error_UnexpectedError);
         }
     }
 }

@@ -20,46 +20,46 @@ namespace Dariosoft.EmailSender.Application.Concrete
         protected readonly Core.Repositories.IHostRepository hostRepository = injection.HostRepository;
         protected readonly Core.Repositories.IAccountRepository accountRepository = injection.AccountRepository;
 
-        protected async Task<Reply<Guid?>> GetClientId(Request<Core.Models.KeyModel?> request)
+        protected async Task<IResponse<Guid?>> GetClientId(IRequest<Core.Models.KeyModel?> request)
         {
             if (request.Payload?.HasValue() == false)
-                return Reply<Guid?>.Success(null);
+                return Response<Guid?>.Success(null);
 
             var reply = await clientRepository.Get(request!);
 
-            return Reply<Guid?>.From(reply, () => reply.Data?.Id);
+            return Response<Guid?>.From(reply, () => reply.Data?.Id);
         }
 
-        protected async Task<Reply<Guid?>> GetHostId(Request<Core.Models.KeyModel> request)
+        protected async Task<IResponse<Guid?>> GetHostId(IRequest<Core.Models.KeyModel> request)
         {
             if (!request.Payload.HasValue())
-                return Reply<Guid?>.Success(null);
+                return Response<Guid?>.Success(null);
 
             var reply = await hostRepository.Get(request!);
 
-            return Reply<Guid?>.From(reply, () => reply.Data?.Id);
+            return Response<Guid?>.From(reply, () => reply.Data?.Id);
         }
 
-        protected async Task<Reply<Guid?>> GetAccountId(Request<Core.Models.KeyModel> request)
+        protected async Task<IResponse<Guid?>> GetAccountId(IRequest<Core.Models.KeyModel> request)
         {
             if (!request.Payload.HasValue())
-                return Reply<Guid?>.Success(null);
+                return Response<Guid?>.Success(null);
 
             var reply = await accountRepository.Get(request!);
 
-            return Reply<Guid?>.From(reply, () => reply.Data?.Id);
+            return Response<Guid?>.From(reply, () => reply.Data?.Id);
         }
 
-        protected Reply Fail(Request request, string where, Exception exception)
+        protected IResponse Fail(IRequest request, string where, Exception exception)
         {
             //TODO: Log
-            return Reply.Fail(I18n.Messages.Error_UnexpectedError);
+            return Response.Fail(I18n.Messages.Error_UnexpectedError);
         }
 
-        protected Reply<T> Fail<T>(Request request, string where, Exception exception)
+        protected IResponse<T> Fail<T>(IRequest request, string where, Exception exception)
         {
             //TODO: Log
-            return Reply<T>.Fail(I18n.Messages.Error_UnexpectedError);
+            return Response<T>.Fail(I18n.Messages.Error_UnexpectedError);
         }
     }
 }

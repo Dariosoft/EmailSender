@@ -3,25 +3,22 @@
     internal class HostService(ServiceInjection injection) 
         : Service(injection), IHostService
     {
-        public async Task<Reply<Core.Models.BaseModel>> Create(Request<Core.Models.CreateHostModel> request)
+        public async Task<IResponse<Core.Models.BaseModel>> Create(IRequest<Core.Models.CreateHostModel> request)
         {
             #region Validation
             if (request.Payload is null)
-                return Reply<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidInputData);
+                return Response<Core.Models.BaseModel>.Fail(I18n.Messages.Error_InvalidInputData);
 
             if (string.IsNullOrWhiteSpace(request.Payload.Address))
-                return Reply<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.HostAddress));
+                return Response<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.HostAddress));
 
             if (request.Payload.PortNumber < 1)
-                return Reply<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.PortNumber));
+                return Response<Core.Models.BaseModel>.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.PortNumber));
             #endregion
 
-            #region Preparing prerequisite data
-            var getClientResult = await GetClientId(request.Transform(request.Payload.ClientKey));
-
-            if (!getClientResult.IsSuccessful)
-                return Reply<Core.Models.BaseModel>.From(getClientResult);
-            #endregion
+            var clientId = request.User.Type == Framework.Types.UserType.SuperAdmin
+                ? (Guid?)null
+                : request.User.GetUserId();
 
             #region Preparing the model
             var model = new Core.Models.HostModel
@@ -29,7 +26,7 @@
                 Id = Guid.NewGuid(),
                 Serial = 0,
                 CreationTime = request.When,
-                ClientId = getClientResult.Data,
+                ClientId = clientId,
                 Enabled = request.Payload.Enabled,
                 Address = request.Payload.Address.Trim(),
                 PortNumber = request.Payload.PortNumber,
@@ -40,30 +37,30 @@
 
             var reply = await hostRepository.Create(request.Transform(model));
 
-            return Reply<Core.Models.BaseModel>.From(reply, () => model.TrimToBaseModel());
+            return Response<Core.Models.BaseModel>.From(reply, () => model.TrimToBaseModel());
         }
 
-        public async Task<Reply> Update(Request<Core.Models.UpdateHostModel> request)
+        public async Task<IResponse> Update(IRequest<Core.Models.UpdateHostModel> request)
         {
             #region Validation
             if (request.Payload is null)
-                return Reply.Fail(I18n.Messages.Error_InvalidInputData);
+                return Response.Fail(I18n.Messages.Error_InvalidInputData);
 
             if (!request.Payload.Key.HasValue())
-                return Reply.Fail(I18n.Messages.Error_NoIdToUpdate);
+                return Response.Fail(I18n.Messages.Error_NoIdToUpdate);
 
             if (string.IsNullOrWhiteSpace(request.Payload.Address))
-                return Reply.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.HostAddress));
+                return Response.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.HostAddress));
 
             if (request.Payload.PortNumber < 1)
-                return Reply.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.PortNumber));
+                return Response.Fail(I18n.MessagesX.Error_MissingRequiredField(I18n.Labels.PortNumber));
             #endregion
 
             #region Preparing prerequisite data
             var getClientResult = await GetClientId(request.Transform(request.Payload.ClientKey));
 
             if (!getClientResult.IsSuccessful)
-                return Reply<Core.Models.BaseModel>.From(getClientResult);
+                return Response<Core.Models.BaseModel>.From(getClientResult);
             #endregion
 
             #region Preparing the model
@@ -84,40 +81,40 @@
             return await hostRepository.Update(request.Transform(model));
         }
 
-        public Task<Reply> Delete(Request<Core.Models.KeyModel> request)
+        public Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Task.FromResult(Reply.Fail(I18n.Messages.Error_InvalidInputData));
+                return Task.FromResult(Response.Fail(I18n.Messages.Error_InvalidInputData));
 
             if (!request.Payload.HasValue())
-                return Task.FromResult(Reply.Fail(I18n.Messages.Warning_RecordNotFound));
+                return Task.FromResult(Response.Fail(I18n.Messages.Warning_RecordNotFound));
 
             return hostRepository.Delete(request);
         }
 
-        public Task<Reply<Core.Models.HostModel?>> Get(Request<Core.Models.KeyModel> request)
+        public Task<IResponse<Core.Models.HostModel?>> Get(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Task.FromResult(Reply<Core.Models.HostModel?>.Fail(I18n.Messages.Error_InvalidInputData));
+                return Task.FromResult(Response<Core.Models.HostModel?>.Fail(I18n.Messages.Error_InvalidInputData));
 
             if (!request.Payload.HasValue())
-                return Task.FromResult(Reply<Core.Models.HostModel?>.Fail(I18n.Messages.Warning_RecordNotFound));
+                return Task.FromResult(Response<Core.Models.HostModel?>.Fail(I18n.Messages.Warning_RecordNotFound));
 
             return hostRepository.Get(request);
         }
 
-        public Task<ListReply<Core.Models.HostModel>> List(Request request)
+        public Task<IListResponse<Core.Models.HostModel>> List(IRequest request)
         {
             return hostRepository.List(request);
         }
 
-        public Task<Reply> SetAvailability(Request<Core.Models.SetAvailabilityModel> request)
+        public Task<IResponse> SetAvailability(IRequest<Core.Models.SetAvailabilityModel> request)
         {
             if (request.Payload is null)
-                return Task.FromResult(Reply.Fail(I18n.Messages.Error_InvalidInputData));
+                return Task.FromResult(Response.Fail(I18n.Messages.Error_InvalidInputData));
 
             if (!request.Payload.HasValue())
-                return Task.FromResult(Reply.Fail(I18n.Messages.Warning_RecordNotFound));
+                return Task.FromResult(Response.Fail(I18n.Messages.Warning_RecordNotFound));
 
             return hostRepository.SetAvailability(request);
         }

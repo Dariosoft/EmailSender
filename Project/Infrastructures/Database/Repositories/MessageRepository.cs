@@ -5,7 +5,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
 {
     internal class MessageRepository(RepositoryInjection injection) : Repository(injection), Core.Repositories.IMessageRepository
     {
-        public async Task<Reply> Create(Request<Core.Models.MessageModel> request)
+        public async Task<IResponse> Create(IRequest<Core.Models.MessageModel> request)
         {
             var mailAddressCollections = new List<DataSource.Tables.MailAddressCollection>();
             var mailAddressCollectionItems = new List<DataSource.Tables.MailAddressCollectionItem>();
@@ -47,7 +47,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply> Update(Request<Core.Models.MessageModel> request)
+        public async Task<IResponse> Update(IRequest<Core.Models.MessageModel> request)
         {
             var mailAddressCollections = new List<DataSource.Tables.MailAddressCollection>();
             var mailAddressCollectionItems = new List<DataSource.Tables.MailAddressCollectionItem>();
@@ -155,7 +155,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -163,10 +163,10 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply> Delete(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
+                return Response.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
 
             try
             {
@@ -200,7 +200,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -208,10 +208,10 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply<Core.Models.MessageModel?>> Get(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse<Core.Models.MessageModel?>> Get(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply<Core.Models.MessageModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
+                return Response<Core.Models.MessageModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
 
             try
             {
@@ -238,8 +238,8 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
 
 
                 return entity is null
-                    ? Reply<Core.Models.MessageModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
-                    : Reply<Core.Models.MessageModel?>.Success(ToModel(entity, mailAddresseItems!));
+                    ? Response<Core.Models.MessageModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
+                    : Response<Core.Models.MessageModel?>.Success(ToModel(entity, mailAddresseItems!));
             }
             catch (Exception e)
             {
@@ -247,7 +247,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<ListReply<Core.Models.MessageModel>> List(Request request)
+        public async Task<IListResponse<Core.Models.MessageModel>> List(IRequest request)
         {
             try
             {
@@ -333,7 +333,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                     }).ToArrayAsync();
                 }
 
-                return ListReply<Core.Models.MessageModel>.Success(
+                return ListResponse<Core.Models.MessageModel>.Success(
                     data: entities.Select(e => ToModel(e, mailAddresseItems)).ToArray()!,
                     totalItems: totalItems,
                     pageNumber: request.ListQuery?.Page ?? 1,
@@ -347,7 +347,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply<bool>> SetStatus(Request<Core.Models.MessageStatusModel> request)
+        public async Task<IResponse<bool>> SetStatus(IRequest<Core.Models.MessageStatusModel> request)
         {
             try
             {
@@ -403,7 +403,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
                     }
                 }
 
-                return Reply<bool>.Success(messageId != Guid.Empty);
+                return Response<bool>.Success(messageId != Guid.Empty);
             }
             catch (Exception e)
             {
@@ -411,7 +411,7 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
             }
         }
 
-        public async Task<Reply<Core.Models.MessageModel?>> GetItemToSend(Request<Core.Models.MessageGetHeadItem> request)
+        public async Task<IResponse<Core.Models.MessageModel?>> GetItemToSend(IRequest<Core.Models.MessageGetHeadItem> request)
         {
             try
             {
@@ -465,8 +465,8 @@ namespace Dariosoft.EmailSender.Infrastructure.Database.Repositories
 
 
                 return entity is null
-                    ? Reply<Core.Models.MessageModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
-                    : Reply<Core.Models.MessageModel?>.Success(ToModel(entity, mailAddresseItems!));
+                    ? Response<Core.Models.MessageModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
+                    : Response<Core.Models.MessageModel?>.Success(ToModel(entity, mailAddresseItems!));
             }
             catch (Exception e)
             {

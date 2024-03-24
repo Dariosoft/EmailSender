@@ -2,16 +2,16 @@
 {
     public interface IHostRepository : IRepository
     {
-        Task<Reply> Create(Request<Models.HostModel> model);
+        Task<IResponse> Create(IRequest<Models.HostModel> model);
 
-        Task<Reply> Update(Request<Core.Models.HostModel> request);
+        Task<IResponse> Update(IRequest<Core.Models.HostModel> request);
 
-        Task<Reply> Delete(Request<Core.Models.KeyModel> request);
+        Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request);
 
-        Task<Reply<Core.Models.HostModel?>> Get(Request<Core.Models.KeyModel> request);
+        Task<IResponse<Core.Models.HostModel?>> Get(IRequest<Core.Models.KeyModel> request);
 
-        Task<Reply> SetAvailability(Request<Core.Models.SetAvailabilityModel> request);
+        Task<IResponse> SetAvailability(IRequest<Core.Models.SetAvailabilityModel> request);
 
-        Task<ListReply<Core.Models.HostModel>> List(Request request);
+        Task<IListResponse<Core.Models.HostModel>> List(IRequest request);
     }
 }

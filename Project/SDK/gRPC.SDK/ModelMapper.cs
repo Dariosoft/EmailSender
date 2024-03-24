@@ -1,10 +1,5 @@
 ﻿using Dariosoft.EmailSender.EndPoint.Abstraction.GrpcInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dariosoft.EmailSender.EndPoint.gRPC.SDK
 {
@@ -47,8 +42,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC.SDK
                 DescendingSort = input.DescendingSort,
                 Query = input.Query ?? "",
                 SortBy = input.SortBy ?? "",
-                Parameters = { input.Parameters }
-
+                Parameters = { input.Parameters ?? new Dictionary<string, string>() }
             };
         #endregion
 
@@ -59,7 +53,7 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC.SDK
                 Id = input.Id,
                 Serial = input.Serial,
                 CreationTime = input.CreationTime.ToDateTimeOffset(),
-                ClientId = Guid.TryParse(input.ClientId.Value, out var clientId) ? clientId : null,
+                ClientId = Guid.TryParse(input.ClientId.Value, out var clientId) && clientId != Guid.Empty ? clientId : null,
                 ClientName = input.ClientName,
                 Enabled = input.Enabled,
                 UseSsl = input.UseSsl,
@@ -268,13 +262,13 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC.SDK
         public static GrpcModel_CreateMessage ToGrpc(Models.Message.CreateMessageModel input)
             => new GrpcModel_CreateMessage
             {
-                SourceAccountKey = input.SourceAccountKey,
+                SourceAccountKey = input.SourceAccountKey ?? "",
                 From = input.From is null ? null : ToGrpc(input.From),
                 IsDraft = input.IsDraft,
                 SubjectIsHtml = input.SubjectIsHtml,
-                Subject = input.Subject,
+                Subject = input.Subject ?? "",
                 BodyIsHtml = input.BodyIsHtml,
-                Body = input.Body,
+                Body = input.Body ?? "",
                 Priority = (GrpcMailPriority)input.Priority,
                 To = { input.To.Select(ToGrpc) },
                 Cc = { input.Cc is null ? [] : input.Cc.Select(ToGrpc) },
@@ -287,12 +281,12 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC.SDK
             => new GrpcModel_UpdateMessage
             {
                 Key = input.Key ?? "",
-                SourceAccountKey = input.SourceAccountKey,
+                SourceAccountKey = input.SourceAccountKey ?? "",
                 From = input.From is null ? null : ToGrpc(input.From),
                 SubjectIsHtml = input.SubjectIsHtml,
-                Subject = input.Subject,
+                Subject = input.Subject ?? "",
                 BodyIsHtml = input.BodyIsHtml,
-                Body = input.Body,
+                Body = input.Body ?? "",
                 Priority = (GrpcMailPriority)input.Priority,
                 To = { input.To.Select(ToGrpc) },
                 Cc = { input.Cc is null ? [] : input.Cc.Select(ToGrpc) },
@@ -308,19 +302,19 @@ namespace Dariosoft.EmailSender.EndPoint.gRPC.SDK
            => new GrpcInterface.GrpcMessageEndPoint_Update_RequestMessage { Model = ToGrpc(input) };
 
         public static GrpcInterface.GrpcMessageEndPoint_Delete_RequestMessage ToGrpcMessage_DeleteRequestMessage(string key)
-            => new GrpcInterface.GrpcMessageEndPoint_Delete_RequestMessage { Key = key };
+            => new GrpcInterface.GrpcMessageEndPoint_Delete_RequestMessage { Key = key ?? "" };
 
         public static GrpcInterface.GrpcMessageEndPoint_Get_RequestMessage ToGrpcMessage_GetRequestMessage(string key)
-            => new GrpcInterface.GrpcMessageEndPoint_Get_RequestMessage { Key = key };
+            => new GrpcInterface.GrpcMessageEndPoint_Get_RequestMessage { Key = key ?? "" };
 
         public static GrpcInterface.GrpcMessageEndPoint_List_RequestMessage ToGrpcMessage_ListRequestMessage(Models.Common.ListQueryModel model)
             => new GrpcInterface.GrpcMessageEndPoint_List_RequestMessage { Model = ToGrpc(model) };
 
         public static GrpcInterface.GrpcMessageEndPoint_TrySend_RequestMessage ToGrpcMessage_TrySendRequestMessage(string key)
-            => new GrpcInterface.GrpcMessageEndPoint_TrySend_RequestMessage { Key = key };
+            => new GrpcInterface.GrpcMessageEndPoint_TrySend_RequestMessage { Key = key ?? "" };
 
         public static GrpcInterface.GrpcMessageEndPoint_TryCancel_RequestMessage ToGrpcMessage_TryCancelRequestMessage(string key)
-            => new GrpcInterface.GrpcMessageEndPoint_TryCancel_RequestMessage { Key = key };
+            => new GrpcInterface.GrpcMessageEndPoint_TryCancel_RequestMessage { Key = key ?? "" };
         #endregion
     }
 }

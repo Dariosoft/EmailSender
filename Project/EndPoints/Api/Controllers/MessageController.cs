@@ -1,12 +1,13 @@
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models;
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models.Common;
 using Dariosoft.EmailSender.EndPoint.Abstraction.Models.Message;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace Dariosoft.EmailSender.EndPoint.Api.Controllers
 {
-    [ApiController, Route("api/message")]
+    [ApiController, Route("api/message"), Authorize]
     public class MessageController(Abstraction.Contracts.IMessageEndPoint endPoint) : ControllerBase
     {
 

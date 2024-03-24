@@ -2,7 +2,7 @@
 {
     internal class ClientRepository(RepositoryInjection injection) : Repository(injection), Core.Repositories.IClientRepository
     {
-        public async Task<Reply> Create(Request<Core.Models.ClientModel> request)
+        public async Task<IResponse> Create(IRequest<Core.Models.ClientModel> request)
         {
             try
             {
@@ -31,7 +31,7 @@
                         .FirstOrDefaultAsync();
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -39,7 +39,7 @@
             }
         }
 
-        public async Task<Reply> Update(Request<Core.Models.ClientModel> request)
+        public async Task<IResponse> Update(IRequest<Core.Models.ClientModel> request)
         {
             try
             {
@@ -87,7 +87,7 @@
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -95,10 +95,10 @@
             }
         }
 
-        public async Task<Reply> Delete(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse> Delete(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
+                return Response.SuccessWithWarning(I18n.Messages.Warning_NoRecordsAffected);
 
             try
             {
@@ -147,7 +147,7 @@
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -155,10 +155,10 @@
             }
         }
 
-        public async Task<Reply<Core.Models.ClientModel?>> Get(Request<Core.Models.KeyModel> request)
+        public async Task<IResponse<Core.Models.ClientModel?>> Get(IRequest<Core.Models.KeyModel> request)
         {
             if (request.Payload is null)
-                return Reply<Core.Models.ClientModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
+                return Response<Core.Models.ClientModel?>.SuccessWithWarning(null, message: I18n.Messages.Warning_RecordNotFound);
 
             try
             {
@@ -180,8 +180,8 @@
                 }
 
                 return entity is null
-                    ? Reply<Core.Models.ClientModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
-                    : Reply<Core.Models.ClientModel?>.Success(ModelMapper.ToModel(entity, admin));
+                    ? Response<Core.Models.ClientModel?>.SuccessWithWarning(data: null, I18n.Messages.Warning_RecordNotFound)
+                    : Response<Core.Models.ClientModel?>.Success(ModelMapper.ToModel(entity, admin));
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@
             }
         }
 
-        public async Task<Reply> SetAvailability(Request<Core.Models.SetAvailabilityModel> request)
+        public async Task<IResponse> SetAvailability(IRequest<Core.Models.SetAvailabilityModel> request)
         {
             try
             {
@@ -233,7 +233,7 @@
                     }
                 }
 
-                return Reply.Success();
+                return Response.Success();
             }
             catch (Exception e)
             {
@@ -241,7 +241,7 @@
             }
         }
 
-        public async Task<ListReply<Core.Models.ClientModel>> List(Request request)
+        public async Task<IListResponse<Core.Models.ClientModel>> List(IRequest request)
         {
             try
             {
@@ -303,7 +303,7 @@
 
              
 
-                return ListReply<Core.Models.ClientModel>.Success(
+                return ListResponse<Core.Models.ClientModel>.Success(
                     data: entities.Join(admins, e => e.Id, a => a.Id, (e, a) => ModelMapper.ToModel(e, a)).ToArray()!,
                     totalItems: totalItems,
                     pageNumber: request.ListQuery?.Page ?? 1,

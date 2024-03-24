@@ -39,15 +39,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.Enums
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.I18n", "Project\Core\I18n\Dariosoft.EmailSender.I18n.csproj", "{C54421E2-BEEF-45A0-ABAD-37E4C56E9207}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.Framework.Cryptography", "Dariosoft\Cryptography\Dariosoft.Framework.Cryptography.csproj", "{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.Framework.Cryptography", "Dariosoft\Cryptography\Dariosoft.Framework.Cryptography.csproj", "{B9CB6A56-EE7A-4CE6-B81E-59BB0B17198B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{0609D4A9-B858-46F6-8154-CEB2389E8974}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.EmailSender.PostmanWorkerService", "Project\Workers\PostmanWorkerService\Dariosoft.EmailSender.PostmanWorkerService.csproj", "{6203EAC8-8F20-47F3-97FE-4D4E892AB144}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.PostmanWorkerService", "Project\Workers\PostmanWorkerService\Dariosoft.EmailSender.PostmanWorkerService.csproj", "{6203EAC8-8F20-47F3-97FE-4D4E892AB144}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sdk", "Sdk", "{FDE89008-F58F-49E2-88AD-B01754E45674}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.EmailSender.EndPoint.gRPC.SDK", "Project\SDK\gRPC.SDK\Dariosoft.EmailSender.EndPoint.gRPC.SDK.csproj", "{6587A698-BCF2-43EA-8484-A3137E362BC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dariosoft.EmailSender.EndPoint.gRPC.SDK", "Project\SDK\gRPC.SDK\Dariosoft.EmailSender.EndPoint.gRPC.SDK.csproj", "{6587A698-BCF2-43EA-8484-A3137E362BC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.ToHave", "Project\Workers\Dariosoft.ToHave\Dariosoft.ToHave.csproj", "{E03742B6-E809-4F47-AFE6-92F79811C35A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dariosoft.EmailSender.Core", "Project\Core\Core\Dariosoft.EmailSender.Core.csproj", "{E770E668-5093-420D-8861-7A94EF473357}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +119,14 @@ Global
 		{6587A698-BCF2-43EA-8484-A3137E362BC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6587A698-BCF2-43EA-8484-A3137E362BC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6587A698-BCF2-43EA-8484-A3137E362BC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E03742B6-E809-4F47-AFE6-92F79811C35A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E03742B6-E809-4F47-AFE6-92F79811C35A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E03742B6-E809-4F47-AFE6-92F79811C35A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E03742B6-E809-4F47-AFE6-92F79811C35A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E770E668-5093-420D-8861-7A94EF473357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E770E668-5093-420D-8861-7A94EF473357}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E770E668-5093-420D-8861-7A94EF473357}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E770E668-5093-420D-8861-7A94EF473357}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +153,8 @@ Global
 		{6203EAC8-8F20-47F3-97FE-4D4E892AB144} = {0609D4A9-B858-46F6-8154-CEB2389E8974}
 		{FDE89008-F58F-49E2-88AD-B01754E45674} = {9CD29F4E-9406-4CBF-BFE6-94BBB1E798C1}
 		{6587A698-BCF2-43EA-8484-A3137E362BC6} = {FDE89008-F58F-49E2-88AD-B01754E45674}
+		{E03742B6-E809-4F47-AFE6-92F79811C35A} = {0609D4A9-B858-46F6-8154-CEB2389E8974}
+		{E770E668-5093-420D-8861-7A94EF473357} = {53E7C739-E68B-4680-BB4E-A4E3296D12CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {513B3CD9-6223-4CE9-82CA-C1E70639D016}
